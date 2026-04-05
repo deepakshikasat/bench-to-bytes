@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 2: Data Science Foundations | Bench to Bytes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+    <div class="nav-inner">
+        <a href="index.html" class="logo">bench<span>2</span>bytes</a>
+        <div class="nav-links">
+            <a href="index.html">All Modules</a>
+            <a href="module1.html">&larr; Prev</a>
+            <a href="module3.html" class="nav-btn">Next Module &rarr;</a>
+        </div>
+    </div>
+</nav>
+
+<div class="module-content">
+
+<header class="module-hero">
+    <div class="container">
+        <p class="module-label">Module 2 &mdash; Weeks 3-5</p>
+        <h1>Data Science Foundations</h1>
+        <p class="module-desc">Upgrade your Python from lab scripts to structured data science. Three projects covering EDA, classification, and regression &mdash; all with biological data and all vibe coded with Claude.</p>
+    </div>
+</header>
+
+<section class="section">
+    <div class="container">
+
+        <!-- Week 3 -->
+        <div class="week-card" id="week3">
+            <div class="week-header">
+                <span class="week-num">Week 3</span>
+                <h4>Gene Expression Explorer &mdash; EDA & Visualization</h4>
+                <label class="week-check" data-week="w3">
+                    <input type="checkbox"> Done
+                </label>
+            </div>
+            <div class="week-body">
+                <div class="week-goal">
+                    <strong>Goal:</strong> Build your first data analysis project end-to-end using RNA-seq data. Learn the EDA workflow that ML teams expect before any modeling.
+                </div>
+
+                <div class="week-section">
+                    <h5>Project: Gene Expression Explorer</h5>
+                    <p class="repo-name">GitHub repo: <code>gene-expression-explorer</code></p>
+
+                    <div class="dataset-box">
+                        <strong>Dataset:</strong> <a href="https://www.ncbi.nlm.nih.gov/geo/">GEO</a> &mdash; Pick an RNA-seq dataset relevant to your interests. Suggestions: IFN-stimulated immune cells, ASO-treated hepatocytes, or any treatment vs. control comparison. Or use <a href="https://dee2.io/">DEE2</a> for pre-processed data.
+                    </div>
+
+                    <p><strong>What to build:</strong></p>
+                    <ol>
+                        <li>Load an RNA-seq count matrix into pandas, explore shape and structure</li>
+                        <li>Filter low-expression genes, normalize (log2 TPM+1 or DESeq2-style)</li>
+                        <li>Volcano plot of differential expression</li>
+                        <li>PCA plot colored by experimental condition</li>
+                        <li>Heatmap of top 50 most variable genes with hierarchical clustering</li>
+                        <li>Export summary table and publication-quality figures</li>
+                        <li>Write README explaining the biology, methods, and what you found</li>
+                    </ol>
+
+                    <div class="prompt-box">
+                        <h6>Bio-Specific Prompts</h6>
+                        <div class="prompt"><code>Load the RNA-seq count matrix from [file]. Filter out genes with mean counts < 10 across all samples. Apply log2(TPM+1) normalization. Show me the distribution of expression values before and after normalization as side-by-side histograms.</code></div>
+                        <div class="prompt"><code>Create a volcano plot from this differential expression results table. Color genes with |log2FC| > 1 and padj < 0.05. Label the top 10 genes by significance. Use a clean publication-style theme with thin axes. Save as PDF at 300 DPI.</code></div>
+                        <div class="prompt"><code>Run PCA on this normalized expression matrix. Color samples by treatment condition. Add 95% confidence ellipses for each group. Show the variance explained by PC1 and PC2 in the axis labels. Does PC1 separate treated from untreated?</code></div>
+                    </div>
+
+                    <div class="concepts-box">
+                        <h6>ML Concepts You'll Pick Up</h6>
+                        <ul>
+                            <li><strong>Dimensionality reduction (PCA)</strong> &mdash; Compressing thousands of genes into 2-3 components. You'll see this constantly in ML.</li>
+                            <li><strong>Feature filtering</strong> &mdash; Removing low-information features (low-expression genes). ML engineers call this feature selection.</li>
+                            <li><strong>Data normalization</strong> &mdash; Making data comparable across samples. Same principle as housekeeping gene normalization.</li>
+                            <li><strong>EDA</strong> &mdash; The mandatory first step before any modeling. No ML engineer builds a model without exploring the data first.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Week 4 -->
+        <div class="week-card" id="week4">
+            <div class="week-header">
+                <span class="week-num">Week 4</span>
+                <h4>Toxicity Classifier &mdash; Your First ML Model</h4>
+                <label class="week-check" data-week="w4">
+                    <input type="checkbox"> Done
+                </label>
+            </div>
+            <div class="week-body">
+                <div class="week-goal">
+                    <strong>Goal:</strong> Build, train, and evaluate your first classification model. Understand the full ML workflow: split &rarr; train &rarr; evaluate &rarr; interpret.
+                </div>
+
+                <div class="week-section">
+                    <h5>Project: Compound Toxicity Classifier</h5>
+                    <p class="repo-name">GitHub repo: <code>toxicity-classifier</code></p>
+
+                    <div class="dataset-box">
+                        <strong>Dataset:</strong> <a href="https://tdcommons.ai/">Therapeutics Data Commons</a> &mdash; Use the hERG toxicity or hepatotoxicity ADMET datasets (pre-formatted for ML). Or use <a href="https://toxico.nibiohn.go.jp/english/">Open TG-GATEs</a> toxicogenomics data.
+                    </div>
+
+                    <p><strong>What to build:</strong></p>
+                    <ol>
+                        <li>Frame a biological question as classification: "Given molecular features, can we predict toxicity?"</li>
+                        <li>Proper train/test split (stratified &mdash; critical for imbalanced bio data)</li>
+                        <li>Train 3 models: Logistic Regression, Random Forest, XGBoost</li>
+                        <li>Evaluate with AUC-ROC, precision-recall curves, confusion matrix</li>
+                        <li>Feature importance &mdash; which molecular features predict toxicity?</li>
+                        <li>Biological interpretation in README</li>
+                    </ol>
+
+                    <div class="prompt-box">
+                        <h6>Bio-Specific Prompts</h6>
+                        <div class="prompt"><code>Split this toxicity dataset into 80/20 train/test with stratification on the toxicity label (the classes are imbalanced). Show me the class distribution in both splits to verify the stratification worked.</code></div>
+                        <div class="prompt"><code>Train a Random Forest classifier to predict hepatotoxicity from molecular descriptors. Use 5-fold stratified cross-validation. Report AUC-ROC, precision, recall, and F1 for each fold. Plot the ROC curves overlaid on one figure.</code></div>
+                        <div class="prompt"><code>Extract SHAP values from the best model on the test set. Show: (1) SHAP beeswarm summary plot, (2) top 20 features bar plot, (3) SHAP dependence plot for the top 3 features. For each top feature, explain what it might mean biologically.</code></div>
+                    </div>
+
+                    <div class="concepts-box">
+                        <h6>ML Concepts You'll Pick Up</h6>
+                        <ul>
+                            <li><strong>Classification workflow</strong> &mdash; The standard ML pipeline: data &rarr; split &rarr; train &rarr; evaluate &rarr; interpret.</li>
+                            <li><strong>Class imbalance</strong> &mdash; In biology, negatives always outnumber positives. Naive accuracy is misleading. Use AUC-ROC.</li>
+                            <li><strong>Feature importance</strong> &mdash; YOUR superpower. ML engineers see "feature_42 matters." You see "that's CpG frequency, which makes sense because..."</li>
+                            <li><strong>Model comparison</strong> &mdash; Always start with a simple baseline. If logistic regression gets 0.85 AUC, the fancy model needs to beat that.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Week 5 -->
+        <div class="week-card" id="week5">
+            <div class="week-header">
+                <span class="week-num">Week 5</span>
+                <h4>Knockdown Predictor &mdash; Regression & Feature Engineering</h4>
+                <label class="week-check" data-week="w5">
+                    <input type="checkbox"> Done
+                </label>
+            </div>
+            <div class="week-body">
+                <div class="week-goal">
+                    <strong>Goal:</strong> Move from categories to continuous values. Predict knockdown efficiency from sequence features &mdash; directly relevant to your ASO work.
+                </div>
+
+                <div class="week-section">
+                    <h5>Project: ASO Knockdown Efficiency Predictor</h5>
+                    <p class="repo-name">GitHub repo: <code>aso-knockdown-predictor</code></p>
+
+                    <div class="dataset-box">
+                        <strong>Dataset:</strong> <a href="https://tdcommons.ai/">TDC</a> siRNA/ASO efficacy datasets, published ASO datasets with knockdown measurements from supplementary tables, or generate synthetic data based on known ASO design rules.
+                    </div>
+
+                    <p><strong>What to build:</strong></p>
+                    <ol>
+                        <li>Curate sequences with measured knockdown efficiency (0-100%)</li>
+                        <li>Engineer biologically meaningful features:
+                            <ul>
+                                <li>GC content, length, dinucleotide frequencies</li>
+                                <li>Predicted melting temperature, secondary structure stability</li>
+                                <li>CpG count, longest homopolymer run</li>
+                            </ul>
+                        </li>
+                        <li>Train regression models: Linear, Random Forest, XGBoost</li>
+                        <li>Evaluate with R&sup2;, MAE, RMSE + predicted vs. actual scatter</li>
+                        <li>Residual analysis &mdash; where does the model fail and why?</li>
+                    </ol>
+
+                    <div class="prompt-box">
+                        <h6>Bio-Specific Prompts</h6>
+                        <div class="prompt"><code>Write a function that takes an ASO sequence string and returns a feature dict: gc_content, length, cpg_count, longest_polyG, predicted Tm (nearest-neighbor), and all 16 dinucleotide frequencies. Include type hints.</code></div>
+                        <div class="prompt"><code>Train an XGBoost regressor to predict knockdown efficiency. Use 5-fold CV. Plot predicted vs. actual with a diagonal reference line, R-squared annotation, and points colored by GC content. Add a marginal histogram on each axis.</code></div>
+                        <div class="prompt"><code>Analyze model residuals (actual - predicted). Plot residuals vs. each top-5 feature. Are there systematic patterns? Highlight regions where the model consistently over- or under-predicts. What biological factors might explain these failures?</code></div>
+                    </div>
+
+                    <div class="concepts-box">
+                        <h6>ML Concepts You'll Pick Up</h6>
+                        <ul>
+                            <li><strong>Regression vs. Classification</strong> &mdash; Predicting a number vs. a category. Different metrics (R&sup2; vs. AUC).</li>
+                            <li><strong>Feature engineering</strong> &mdash; Hand-crafting input features from raw data. This is where biology knowledge is critical.</li>
+                            <li><strong>Residual analysis</strong> &mdash; Understanding model failures reveals biology the model can't capture.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="complete-section">
+    <div class="container">
+        <button class="complete-btn">Complete Module 2 &rarr; Unlock Module 3</button>
+        <p class="complete-hint">You should have 3 new GitHub repos after this module.</p>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container">
+        <p><a href="index.html">&larr; Back to all modules</a></p>
+    </div>
+</footer>
+
+<script src="progress.js"></script>
+<script src="feedback.js"></script>
+<script>initModule(2);</script>
+</body>
+</html>

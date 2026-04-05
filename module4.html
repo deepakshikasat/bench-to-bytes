@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 4: Building Data Products | Bench to Bytes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+    <div class="nav-inner">
+        <a href="index.html" class="logo">bench<span>2</span>bytes</a>
+        <div class="nav-links">
+            <a href="index.html">All Modules</a>
+            <a href="module3.html">&larr; Prev</a>
+            <a href="module5.html" class="nav-btn">Next Module &rarr;</a>
+        </div>
+    </div>
+</nav>
+
+<div class="module-content">
+
+<header class="module-hero">
+    <div class="container">
+        <p class="module-label">Module 4 &mdash; Weeks 9-10</p>
+        <h1>Building Data Products</h1>
+        <p class="module-desc">Stop making notebooks that live on your laptop. Build tools other scientists can actually use &mdash; dashboards, apps, and LLM-powered data extraction. This is what scientific data leads DO.</p>
+    </div>
+</header>
+
+<section class="section">
+    <div class="container">
+
+        <!-- Week 9 -->
+        <div class="week-card" id="week9">
+            <div class="week-header">
+                <span class="week-num">Week 9</span>
+                <h4>Drug Safety Dashboard</h4>
+                <label class="week-check" data-week="w9">
+                    <input type="checkbox"> Done
+                </label>
+            </div>
+            <div class="week-body">
+                <div class="week-goal">
+                    <strong>Goal:</strong> Build a real data application using regulatory data. Learn the end-to-end workflow: data source &rarr; processing &rarr; analysis &rarr; visualization &rarr; deployment.
+                </div>
+
+                <div class="week-section">
+                    <h5>Project: Interactive Drug Safety Explorer</h5>
+                    <p class="repo-name">GitHub repo: <code>drug-safety-dashboard</code></p>
+
+                    <div class="dataset-box">
+                        <strong>Dataset:</strong> <a href="https://open.fda.gov/apis/drug/event/">FDA FAERS API</a> &mdash; Real adverse event reporting data. Or <a href="https://www.ebi.ac.uk/chembl/">ChEMBL</a> for compound bioactivity data.
+                    </div>
+
+                    <p><strong>What to build:</strong> A Streamlit dashboard that:</p>
+                    <ol>
+                        <li>Lets users search for a drug or compound class</li>
+                        <li>Shows adverse event profiles organized by organ system</li>
+                        <li>Compares safety profiles: ASOs vs. small molecules vs. antibodies</li>
+                        <li>ML clustering of drugs by adverse event profile (unsupervised)</li>
+                        <li>Interactive plotly visualizations</li>
+                        <li>Deploy on Streamlit Cloud (free tier)</li>
+                    </ol>
+
+                    <div class="prompt-box">
+                        <h6>Bio-Specific Prompts</h6>
+                        <div class="prompt"><code>Write a Python function that queries the FDA FAERS API for adverse events associated with a given drug name. Parse the JSON response to extract: reaction names, outcome counts, seriousness level, and reporting quarter. Return as a clean DataFrame. Handle pagination for drugs with many reports.</code></div>
+                        <div class="prompt"><code>Build a Streamlit dashboard with: (1) search bar for drug name, (2) bar chart of top 20 adverse events by frequency, (3) treemap showing events organized by MedDRA organ system class, (4) comparison tab that overlays AE profiles of two drugs side by side using plotly. Use st.tabs for organization. Cache API calls with @st.cache_data.</code></div>
+                        <div class="prompt"><code>Create a drug clustering analysis: build a feature matrix (rows = drugs, columns = adverse event types, values = normalized frequency). Run UMAP + KMeans(k=5). Visualize with plotly scatter, color by cluster, hover shows drug name. Add a sidebar to adjust k. Do drugs in the same therapeutic class cluster together?</code></div>
+                    </div>
+
+                    <div class="concepts-box">
+                        <h6>ML Concepts You'll Pick Up</h6>
+                        <ul>
+                            <li><strong>Unsupervised learning</strong> &mdash; Clustering without labels. Discovery-driven, not prediction-driven.</li>
+                            <li><strong>Data product development</strong> &mdash; The full loop from raw data to a tool someone else can use.</li>
+                            <li><strong>API integration</strong> &mdash; Pulling live data from external sources programmatically.</li>
+                            <li><strong>Deployment</strong> &mdash; Making your work accessible. Streamlit Cloud = free hosting for data apps.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Week 10 -->
+        <div class="week-card" id="week10">
+            <div class="week-header">
+                <span class="week-num">Week 10</span>
+                <h4>LLM-Powered Literature Mining</h4>
+                <label class="week-check" data-week="w10">
+                    <input type="checkbox"> Done
+                </label>
+            </div>
+            <div class="week-body">
+                <div class="week-goal">
+                    <strong>Goal:</strong> Build a tool that uses Claude's API to extract structured data from scientific papers. This is the kind of tool that could seed a startup.
+                </div>
+
+                <div class="week-section">
+                    <h5>Project: BioPaper Mining Tool</h5>
+                    <p class="repo-name">GitHub repo: <code>biopaper-mining-tool</code></p>
+
+                    <div class="dataset-box">
+                        <strong>Dataset:</strong> PubMed abstracts via <a href="https://www.ncbi.nlm.nih.gov/books/NBK25500/">NCBI E-utilities API</a>. Search for "antisense oligonucleotide" OR "oligonucleotide therapeutics" OR your area of interest.
+                    </div>
+
+                    <p><strong>What to build:</strong></p>
+                    <ol>
+                        <li>Fetch abstracts from PubMed by search query</li>
+                        <li>Use Claude API to extract structured data:
+                            <ul>
+                                <li>Drug/compound name + chemistry type (ASO, siRNA, gapmer, etc.)</li>
+                                <li>Target gene/pathway</li>
+                                <li>Model system (cell type, animal model, clinical)</li>
+                                <li>Key findings (efficacy, toxicity, mechanism)</li>
+                                <li>Dose/concentration information</li>
+                            </ul>
+                        </li>
+                        <li>Output as structured CSV/database</li>
+                        <li>Streamlit interface: search, browse, filter, download</li>
+                        <li>Analytics tab: most-studied targets, trends over time, common model systems</li>
+                    </ol>
+
+                    <div class="prompt-box">
+                        <h6>Bio-Specific Prompts</h6>
+                        <div class="prompt"><code>Write a function using the NCBI E-utilities API that searches PubMed for a query string and returns the top N abstracts with PubMed IDs, titles, authors, publication date, journal, and full abstract text as a DataFrame. Include rate limiting (max 3 requests/second per NCBI guidelines).</code></div>
+                        <div class="prompt"><code>Using the Anthropic Python SDK, write a function that sends a PubMed abstract to Claude and extracts structured data. The system prompt should instruct Claude to return JSON with these fields: compound_name, compound_type (one of: ASO, siRNA, gapmer, miRNA, aptamer, other), target_gene, model_system, species, key_finding, toxicity_mentioned (bool), doses_tested. Handle cases where information isn't stated (return null, not a guess). Use claude-haiku for cost efficiency since we're processing many abstracts.</code></div>
+                        <div class="prompt"><code>Build a Streamlit app for this literature mining tool. Layout: (1) sidebar with PubMed search query input, number of papers slider (10-100), and a "Mine Papers" button with a progress bar, (2) main area with tabs: "Results Table" (sortable, filterable DataFrame), "Analytics" (bar charts of top targets, compound types, model systems), "Download" (CSV export button). Cache results so re-running doesn't re-fetch.</code></div>
+                    </div>
+
+                    <div class="concepts-box">
+                        <h6>ML Concepts You'll Pick Up</h6>
+                        <ul>
+                            <li><strong>LLM APIs</strong> &mdash; Using language models programmatically. The most in-demand AI skill in 2026.</li>
+                            <li><strong>Structured extraction (NER)</strong> &mdash; Getting reliable, typed output from unstructured text. Massive bottleneck in biotech.</li>
+                            <li><strong>Prompt engineering for extraction</strong> &mdash; System prompts, output schemas, handling edge cases.</li>
+                            <li><strong>RAG (conceptual)</strong> &mdash; You're building the "retrieval" part. This prepares you for knowledge systems and chatbots over scientific literature.</li>
+                        </ul>
+                    </div>
+
+                    <div class="tip-box">
+                        <p><strong>Startup potential:</strong> Automated literature mining + structured databases is a real market need. Pharma companies spend massive resources on manual literature review. A tool that reliably extracts and structures data from thousands of papers is genuinely valuable. Deploy this on Streamlit Cloud and link from your portfolio.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="complete-section">
+    <div class="container">
+        <button class="complete-btn">Complete Module 4 &rarr; Unlock Module 5</button>
+        <p class="complete-hint">You should have 2 deployed Streamlit apps after this module.</p>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container">
+        <p><a href="index.html">&larr; Back to all modules</a></p>
+    </div>
+</footer>
+
+<script src="progress.js"></script>
+<script src="feedback.js"></script>
+<script>initModule(4);</script>
+</body>
+</html>

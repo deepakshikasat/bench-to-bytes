@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 5: Leadership & Portfolio | Bench to Bytes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+    <div class="nav-inner">
+        <a href="index.html" class="logo">bench<span>2</span>bytes</a>
+        <div class="nav-links">
+            <a href="index.html">All Modules</a>
+            <a href="module4.html">&larr; Prev</a>
+            <a href="resume.html" class="nav-btn">Resume Builder</a>
+        </div>
+    </div>
+</nav>
+
+<div class="module-content">
+
+<header class="module-hero">
+    <div class="container">
+        <p class="module-label">Module 5 &mdash; Weeks 11-12</p>
+        <h1>Leadership & Portfolio Launch</h1>
+        <p class="module-desc">From individual contributor to scientific data lead. Data strategy, a capstone pipeline, portfolio polish, and positioning yourself at the intersection of biology and AI.</p>
+    </div>
+</header>
+
+<section class="section">
+    <div class="container">
+
+        <!-- Week 11 -->
+        <div class="week-card" id="week11">
+            <div class="week-header">
+                <span class="week-num">Week 11</span>
+                <h4>ML-Ready Data Strategy</h4>
+                <label class="week-check" data-week="w11">
+                    <input type="checkbox"> Done
+                </label>
+            </div>
+            <div class="week-body">
+                <div class="week-goal">
+                    <strong>Goal:</strong> Create a practical guide for generating ML-ready biological data. This knowledge makes you invaluable &mdash; most ML projects in biotech fail because of bad data, not bad models.
+                </div>
+
+                <div class="week-section">
+                    <h5>Project: ML-Ready Data Playbook</h5>
+                    <p class="repo-name">GitHub repo: <code>ml-ready-bio-data</code></p>
+
+                    <p><strong>What to build:</strong></p>
+                    <ol>
+                        <li><strong>Written Guide</strong> &mdash; A document covering:
+                            <ul>
+                                <li>Sample size planning for ML (not the same as traditional power analysis)</li>
+                                <li>Label quality &mdash; your assay readout IS the ML label</li>
+                                <li>Batch effects &mdash; the #1 confounder in biological ML</li>
+                                <li>Feature richness &mdash; multi-modal data beats more samples of one type</li>
+                                <li>Metadata standards &mdash; FAIR principles in practice</li>
+                                <li>Data format &mdash; tidy format, standard identifiers (Gene IDs not names)</li>
+                            </ul>
+                        </li>
+                        <li><strong>Demo Notebook: How Batch Effects Corrupt ML Models</strong>
+                            <ul>
+                                <li>Generate synthetic gene expression data with a real biological signal</li>
+                                <li>Add batch effects confounded with the experimental condition</li>
+                                <li>Show that the ML model learns batch, not biology</li>
+                                <li>Apply ComBat batch correction and show the difference</li>
+                            </ul>
+                        </li>
+                        <li><strong>Checklist Template</strong> for wet-lab teams generating data for ML downstream</li>
+                    </ol>
+
+                    <div class="week-section">
+                        <h5>Key Questions to Ask When Someone Proposes an ML Project</h5>
+                        <table class="info-table">
+                            <tr><th>Question</th><th>Why It Matters</th></tr>
+                            <tr><td>What exactly are we predicting?</td><td>Vague labels produce useless models</td></tr>
+                            <tr><td>How much labeled data do we have?</td><td>100 samples won't train a neural network</td></tr>
+                            <tr><td>What's the baseline?</td><td>If a simple rule gets 80%, you might not need ML</td></tr>
+                            <tr><td>Are there batch effects?</td><td>Model might learn batch, not biology</td></tr>
+                            <tr><td>What would we do differently if the model works?</td><td>No actionable outcome = no business value</td></tr>
+                            <tr><td>How will we validate prospectively?</td><td>Retrospective CV is necessary but not sufficient</td></tr>
+                        </table>
+                    </div>
+
+                    <div class="prompt-box">
+                        <h6>Bio-Specific Prompts</h6>
+                        <div class="prompt"><code>Generate synthetic RNA-seq data: 100 samples, 1000 genes, 2 conditions (treated/untreated, 50 each). Add 50 differentially expressed genes with log2FC ~2. Then add a batch effect: put samples from batch 1 (30 treated, 20 untreated) and batch 2 (20 treated, 30 untreated) — the batch is confounded with condition. Train a Random Forest classifier and show it achieves >95% accuracy. Then show that the model actually learned batch, not treatment, by examining feature importances and testing on balanced batches.</code></div>
+                        <div class="prompt"><code>Apply ComBat batch correction to the synthetic data. Retrain the model. Show: (1) PCA before and after correction colored by batch and by condition, (2) model performance before/after, (3) feature importances before/after. Does the model now learn biology instead of batch?</code></div>
+                    </div>
+
+                    <div class="concepts-box">
+                        <h6>ML Concepts You'll Pick Up</h6>
+                        <ul>
+                            <li><strong>Data-centric AI</strong> &mdash; Improving data quality matters more than improving models. This is Andrew Ng's key insight.</li>
+                            <li><strong>Data leakage</strong> &mdash; When the model learns something other than what you intended. Batch effects are the bio version.</li>
+                            <li><strong>FAIR principles</strong> &mdash; Findable, Accessible, Interoperable, Reusable. The standard for shareable data.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Week 12 -->
+        <div class="week-card" id="week12">
+            <div class="week-header">
+                <span class="week-num">Week 12</span>
+                <h4>Capstone Pipeline & Portfolio Launch</h4>
+                <label class="week-check" data-week="w12">
+                    <input type="checkbox"> Done
+                </label>
+            </div>
+            <div class="week-body">
+                <div class="week-goal">
+                    <strong>Goal:</strong> Build a capstone project that ties everything together, polish your GitHub portfolio, write a blog post, and plan your next move.
+                </div>
+
+                <div class="week-section">
+                    <h5>Project: End-to-End Oligo Therapeutics ML Pipeline</h5>
+                    <p class="repo-name">GitHub repo: <code>oligo-ml-pipeline</code></p>
+
+                    <p><strong>What to build:</strong> A pipeline combining skills from every module:</p>
+                    <ol>
+                        <li><strong>Data ingestion</strong> (Module 1 &mdash; Claude automation): Pull compound data from a public source</li>
+                        <li><strong>EDA + cleaning</strong> (Module 2): Structured exploration and quality checks</li>
+                        <li><strong>Feature engineering</strong> (Module 2-3): Both classical sequence features AND learned embeddings</li>
+                        <li><strong>Model training</strong> (Module 2-3): Train and compare multiple models with proper CV</li>
+                        <li><strong>Interpretation</strong> (Module 3): SHAP values, biological validation</li>
+                        <li><strong>Deployment</strong> (Module 4): Streamlit app with prediction + explanation</li>
+                        <li><strong>Documentation</strong> (All): README that could serve as a mini-paper</li>
+                    </ol>
+                </div>
+
+                <div class="week-section">
+                    <h5>Portfolio Launch Checklist</h5>
+                    <ol>
+                        <li><strong>Polish all 12 GitHub repos</strong>
+                            <ul>
+                                <li>Clean, consistent READMEs with biological context</li>
+                                <li>Each repo has: purpose, dataset, methods, results, figures</li>
+                                <li>Requirements files and clear setup instructions</li>
+                            </ul>
+                        </li>
+                        <li><strong>Create a GitHub profile README</strong>
+                            <ul>
+                                <li>Pin your best 4-6 projects</li>
+                                <li>Include a brief bio positioning you at the intersection</li>
+                                <li>Link to your website and published articles</li>
+                            </ul>
+                        </li>
+                        <li><strong>Write a blog post</strong>
+                            <ul>
+                                <li>"What I Learned Building ML Projects as a Wet-Lab Scientist"</li>
+                                <li>Publish on LinkedIn, your website, or Medium</li>
+                                <li>Include specific insights, not generic advice</li>
+                                <li>Link to your GitHub projects</li>
+                            </ul>
+                        </li>
+                        <li><strong>Internal impact at GSK</strong>
+                            <ul>
+                                <li>Draft a 1-pager proposing an ML-augmented approach to a current project</li>
+                                <li>Identify 2-3 computational biology / AI people at GSK to connect with</li>
+                                <li>Share your portfolio with your manager</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="prompt-box">
+                    <h6>Bio-Specific Prompts</h6>
+                    <div class="prompt"><code>Write a GitHub profile README for a molecular biology scientist building at the intersection of wet lab and ML. Include: (1) a 2-sentence bio, (2) a "Featured Projects" section with 4 cards showing project name, one-line description, and tech stack badges (Python, scikit-learn, Streamlit, PyTorch, etc.), (3) a "Skills" section split into Wet Lab / Computational / Tools columns. Keep it clean and professional.</code></div>
+                    <div class="prompt"><code>Draft a 600-word LinkedIn article: "What I Learned Building ML Projects as a Wet-Lab Scientist." Structure: (1) why I did this — the gap I saw, (2) the biggest surprise — feature engineering matters more than model choice for biological data, (3) where domain expertise beats algorithms — interpreting feature importance, catching batch effects, knowing which questions matter, (4) what I'd tell other scientists. Make it personal, specific, and link to 2-3 GitHub projects.</code></div>
+                    <div class="prompt"><code>Write a 1-page proposal for an ML project at a pharma company: "Predicting ASO Hepatotoxicity Risk from Sequence Features and In Vitro Assay Data." Include: Business Case (why), Data Available (what we have), Approach (how, including baseline and ML models), Expected Impact (what changes if it works), Timeline (4-6 weeks), Risks (batch effects, sample size, label quality). Keep it concise enough for a director to read in 3 minutes.</code></div>
+                </div>
+
+                <div class="concepts-box">
+                    <h6>What This Module Demonstrates</h6>
+                    <ul>
+                        <li><strong>Systems thinking</strong> &mdash; Connecting data generation to modeling to deployment. This is what leaders do.</li>
+                        <li><strong>Communication</strong> &mdash; Explaining ML to biologists and biology to ML engineers. Your bridge role.</li>
+                        <li><strong>Strategic thinking</strong> &mdash; Knowing which problems are worth solving with ML and which aren't.</li>
+                        <li><strong>You already wrote "Scientists Must Leverage, Not Compete with, AI Systems"</strong> &mdash; now you have the portfolio to back it up.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Final Resources -->
+<section class="section section-dark">
+    <div class="container">
+        <h2>Complete Resource Library</h2>
+        <div class="resources-grid">
+            <div class="resource-category">
+                <h4>Learning (All Free)</h4>
+                <ul>
+                    <li><a href="https://www.kaggle.com/learn/pandas">Kaggle: Pandas</a></li>
+                    <li><a href="https://www.kaggle.com/learn/intro-to-machine-learning">Kaggle: Intro to ML</a></li>
+                    <li><a href="https://www.youtube.com/playlist?list=PLblh5JKOoLUICTaGLRoHQDuF_7q2GfuJF">StatQuest: ML Fundamentals</a></li>
+                    <li><a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi">3Blue1Brown: Neural Networks</a></li>
+                    <li><a href="https://huggingface.co/learn/nlp-course">Hugging Face Course</a></li>
+                    <li><a href="https://docs.streamlit.io/get-started">Streamlit Docs</a></li>
+                    <li><a href="https://docs.anthropic.com/en/docs/claude-code">Claude Code Docs</a></li>
+                </ul>
+            </div>
+            <div class="resource-category">
+                <h4>Biological Datasets</h4>
+                <ul>
+                    <li><a href="https://tdcommons.ai/">Therapeutics Data Commons</a> &mdash; ML-ready drug discovery</li>
+                    <li><a href="https://www.ncbi.nlm.nih.gov/geo/">GEO</a> &mdash; Gene expression</li>
+                    <li><a href="https://dee2.io/">DEE2</a> &mdash; Processed RNA-seq</li>
+                    <li><a href="https://www.ebi.ac.uk/chembl/">ChEMBL</a> &mdash; Compound bioactivity</li>
+                    <li><a href="https://open.fda.gov/">OpenFDA</a> &mdash; Adverse events</li>
+                    <li><a href="https://bbbc.broadinstitute.org/">BBBC</a> &mdash; Cell images</li>
+                    <li><a href="https://www.uniprot.org/">UniProt</a> &mdash; Protein sequences</li>
+                    <li><a href="https://toxico.nibiohn.go.jp/english/">Open TG-GATEs</a> &mdash; Toxicogenomics</li>
+                </ul>
+            </div>
+            <div class="resource-category">
+                <h4>Python Libraries</h4>
+                <ul>
+                    <li><code>pandas, numpy</code> &mdash; Data manipulation</li>
+                    <li><code>scikit-learn, xgboost</code> &mdash; ML</li>
+                    <li><code>matplotlib, seaborn, plotly</code> &mdash; Viz</li>
+                    <li><code>streamlit</code> &mdash; Data apps</li>
+                    <li><code>transformers</code> &mdash; Bio foundation models</li>
+                    <li><code>biopython</code> &mdash; Sequence handling</li>
+                    <li><code>pydeseq2</code> &mdash; Differential expression</li>
+                    <li><code>umap-learn, shap</code> &mdash; Viz + explainability</li>
+                    <li><code>anthropic</code> &mdash; Claude API</li>
+                </ul>
+            </div>
+            <div class="resource-category">
+                <h4>Your Project Portfolio</h4>
+                <ul>
+                    <li><code>bench2bytes-workspace</code> &mdash; Dev setup</li>
+                    <li><code>lab-data-processor</code> &mdash; Plate QC + dose-response</li>
+                    <li><code>gene-expression-explorer</code> &mdash; RNA-seq EDA</li>
+                    <li><code>toxicity-classifier</code> &mdash; First ML model</li>
+                    <li><code>aso-knockdown-predictor</code> &mdash; Regression</li>
+                    <li><code>protein-embedding-explorer</code> &mdash; ESM-2</li>
+                    <li><code>immune-signature-classifier</code> &mdash; Transcriptomics ML</li>
+                    <li><code>cell-phenotype-classifier</code> &mdash; Deep learning</li>
+                    <li><code>drug-safety-dashboard</code> &mdash; Streamlit app</li>
+                    <li><code>biopaper-mining-tool</code> &mdash; LLM extraction</li>
+                    <li><code>ml-ready-bio-data</code> &mdash; Data strategy</li>
+                    <li><code>oligo-ml-pipeline</code> &mdash; Capstone</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="complete-section">
+    <div class="container">
+        <button class="complete-btn">Complete Course &rarr; Build Your Resume</button>
+        <p class="complete-hint">Congratulations. You've built 12 projects, deployed 2 apps, and positioned yourself at the intersection of biology and AI.</p>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container">
+        <p><a href="index.html">&larr; Back to all modules</a></p>
+    </div>
+</footer>
+
+<script src="progress.js"></script>
+<script src="feedback.js"></script>
+<script>initModule(5);</script>
+</body>
+</html>

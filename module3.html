@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 3: Bio-Specific ML | Bench to Bytes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+    <div class="nav-inner">
+        <a href="index.html" class="logo">bench<span>2</span>bytes</a>
+        <div class="nav-links">
+            <a href="index.html">All Modules</a>
+            <a href="module2.html">&larr; Prev</a>
+            <a href="module4.html" class="nav-btn">Next Module &rarr;</a>
+        </div>
+    </div>
+</nav>
+
+<div class="module-content">
+
+<header class="module-hero">
+    <div class="container">
+        <p class="module-label">Module 3 &mdash; Weeks 6-8</p>
+        <h1>Bio-Specific ML</h1>
+        <p class="module-desc">The ML that matters for your career: protein/nucleotide embeddings, foundation models, transcriptomics + ML, and deep learning for cell images. This is where biology meets state-of-the-art AI.</p>
+    </div>
+</header>
+
+<section class="section">
+    <div class="container">
+
+        <!-- Week 6 -->
+        <div class="week-card" id="week6">
+            <div class="week-header">
+                <span class="week-num">Week 6</span>
+                <h4>Protein Embeddings with ESM-2</h4>
+                <label class="week-check" data-week="w6">
+                    <input type="checkbox"> Done
+                </label>
+            </div>
+            <div class="week-body">
+                <div class="week-goal">
+                    <strong>Goal:</strong> Understand embeddings &mdash; the most important concept in modern bio-AI. Use pre-trained protein models to create meaningful sequence representations.
+                </div>
+
+                <div class="week-section">
+                    <h5>Concept: What Are Embeddings?</h5>
+                    <p>Embeddings convert biological sequences into coordinates in high-dimensional space where <em>similar sequences are close together</em>. Think flow cytometry: you project cells into multi-dimensional space based on marker expression, and clusters emerge. Embeddings do the same for sequences, but the "markers" are learned from millions of examples.</p>
+
+                    <table class="info-table">
+                        <tr><th>Model</th><th>Input</th><th>Why You Care</th></tr>
+                        <tr><td>ESM-2 (Meta)</td><td>Protein sequences</td><td>Predict function, structure, interactions without wet lab</td></tr>
+                        <tr><td>Nucleotide Transformer</td><td>DNA/RNA</td><td>ASO design, regulatory element prediction</td></tr>
+                        <tr><td>scGPT</td><td>Single-cell expression</td><td>Cell type classification, perturbation response</td></tr>
+                        <tr><td>DNABERT-2</td><td>DNA sequences</td><td>Promoter prediction, variant effects</td></tr>
+                    </table>
+                </div>
+
+                <div class="week-section">
+                    <h5>Project: Protein Function Clustering</h5>
+                    <p class="repo-name">GitHub repo: <code>protein-embedding-explorer</code></p>
+
+                    <div class="dataset-box">
+                        <strong>Dataset:</strong> <a href="https://www.uniprot.org/">UniProt</a> &mdash; Download sequences for a protein family (e.g., all human complement pathway proteins relevant to your GSK work, or all human kinases). 200-500 sequences is plenty.
+                    </div>
+
+                    <p><strong>What to build:</strong></p>
+                    <ol>
+                        <li>Download protein sequences from UniProt with metadata</li>
+                        <li>Generate ESM-2 embeddings using Hugging Face <code>transformers</code></li>
+                        <li>Visualize with UMAP &mdash; do functional subfamilies cluster?</li>
+                        <li>Compare: ESM-2 embeddings vs. simple features (length, MW, amino acid composition)</li>
+                        <li>Build nearest-neighbor search: "given this protein, find the most similar"</li>
+                        <li>Interactive plotly visualization with hover labels</li>
+                    </ol>
+
+                    <div class="prompt-box">
+                        <h6>Bio-Specific Prompts</h6>
+                        <div class="prompt"><code>Write a script that downloads all human complement pathway proteins from UniProt using the REST API. Save sequences and metadata (protein name, gene name, function annotation, subcellular location) as a DataFrame.</code></div>
+                        <div class="prompt"><code>Generate ESM-2 embeddings for this list of protein sequences using the facebook/esm2_t6_8M_UR50D model from Hugging Face. Use mean pooling over the sequence length dimension. Save the embedding matrix as a numpy array. Show a progress bar.</code></div>
+                        <div class="prompt"><code>Run UMAP on these protein embeddings. Color by protein subfamily/function. Compare with UMAP on simple features (amino acid composition, length, MW, pI). Show both plots side by side. Which representation separates functional groups better?</code></div>
+                    </div>
+
+                    <div class="concepts-box">
+                        <h6>ML Concepts You'll Pick Up</h6>
+                        <ul>
+                            <li><strong>Embeddings</strong> &mdash; The representation powering all modern bio-AI. Sequences become numbers that capture biological meaning.</li>
+                            <li><strong>Foundation models</strong> &mdash; Pre-trained on massive data, adapted to specific tasks. You don't train them; you use them.</li>
+                            <li><strong>Transfer learning</strong> &mdash; ESM-2 learned from millions of proteins. Your 200 sequences benefit from all that knowledge.</li>
+                            <li><strong>Representation learning</strong> &mdash; Learned features (embeddings) vs. hand-crafted features. The core question in modern ML.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Week 7 -->
+        <div class="week-card" id="week7">
+            <div class="week-header">
+                <span class="week-num">Week 7</span>
+                <h4>Immune Gene Signature Discovery</h4>
+                <label class="week-check" data-week="w7">
+                    <input type="checkbox"> Done
+                </label>
+            </div>
+            <div class="week-body">
+                <div class="week-goal">
+                    <strong>Goal:</strong> Apply ML to transcriptomics. Discover gene signatures that classify immune states &mdash; directly building on your published IFN research.
+                </div>
+
+                <div class="week-section">
+                    <h5>Project: Immune Gene Signature Classifier</h5>
+                    <p class="repo-name">GitHub repo: <code>immune-signature-classifier</code></p>
+
+                    <div class="dataset-box">
+                        <strong>Dataset:</strong> <a href="https://www.ncbi.nlm.nih.gov/geo/">GEO</a> &mdash; Search for interferon stimulation RNA-seq datasets (IFN-treated vs. untreated across cell types). Or use <a href="https://dee2.io/">DEE2</a> for uniformly processed data.
+                    </div>
+
+                    <p><strong>What to build:</strong></p>
+                    <ol>
+                        <li>Download bulk RNA-seq with IFN treatment conditions</li>
+                        <li>Traditional DEG analysis using <code>pydeseq2</code></li>
+                        <li>ML classification: can a model distinguish IFN-treated from untreated?</li>
+                        <li>Compare ML feature importance vs. known ISGs (interferon-stimulated genes)</li>
+                        <li>Does the model discover non-obvious genes? &mdash; YOUR biological insight shines here</li>
+                        <li>Venn diagram: DEGs vs. ML-selected features vs. known ISG list</li>
+                    </ol>
+
+                    <div class="prompt-box">
+                        <h6>Bio-Specific Prompts</h6>
+                        <div class="prompt"><code>Run differential expression analysis using pydeseq2 comparing IFN-treated vs. untreated samples. Then train a Random Forest classifier on the top 500 most variable genes. Compare the top 20 DEGs (by p-value) with the top 20 features (by RF importance). Show overlap as a Venn diagram. How many genes appear in both lists?</code></div>
+                        <div class="prompt"><code>Create a clustermap of the top 30 ML-selected genes across all samples. Annotate rows: green if the gene is a known ISG from this list [MX1, IFIT1, ISG15, OAS1, STAT1, IRF7, IFITM1, BST2, IFI44, RSAD2], red if not. Are there genes the model finds important that aren't canonical ISGs?</code></div>
+                    </div>
+
+                    <div class="concepts-box">
+                        <h6>ML Concepts You'll Pick Up</h6>
+                        <ul>
+                            <li><strong>ML vs. traditional statistics</strong> &mdash; DEGs and feature importance answer different questions. They're complementary.</li>
+                            <li><strong>High-dimensional data</strong> &mdash; Thousands of genes, few samples. ML handles this with regularization and feature selection.</li>
+                            <li><strong>Biological validation</strong> &mdash; Checking if ML results make biological sense. Your domain expertise IS the validation.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Week 8 -->
+        <div class="week-card" id="week8">
+            <div class="week-header">
+                <span class="week-num">Week 8</span>
+                <h4>Deep Learning & Cell Image Analysis</h4>
+                <label class="week-check" data-week="w8">
+                    <input type="checkbox"> Done
+                </label>
+            </div>
+            <div class="week-body">
+                <div class="week-goal">
+                    <strong>Goal:</strong> Understand deep learning conceptually and build a cell image classifier using transfer learning. Know when DL is appropriate vs. overkill.
+                </div>
+
+                <div class="week-section">
+                    <h5>Learning: Deep Learning Demystified (1 hr)</h5>
+                    <p>Watch <a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi">3Blue1Brown Neural Networks</a> videos 1-4 (~60 min). Best visual DL explanation available.</p>
+
+                    <table class="info-table">
+                        <tr><th>Architecture</th><th>Good For</th><th>Bio Example</th></tr>
+                        <tr><td>CNN</td><td>Images, sequences</td><td>Cell classification, motif detection</td></tr>
+                        <tr><td>Transformer</td><td>Sequences, language</td><td>AlphaFold, ESM-2, scGPT</td></tr>
+                        <tr><td>GNN</td><td>Molecular graphs</td><td>Drug-target interaction</td></tr>
+                        <tr><td>VAE</td><td>Generation, compression</td><td>Single-cell analysis, molecule design</td></tr>
+                    </table>
+
+                    <div class="tip-box">
+                        <p><strong>When DL makes sense:</strong> Large datasets (>10K) OR transfer learning, complex inputs (images, sequences, graphs). <strong>When it doesn't:</strong> Small tabular data (use XGBoost), when interpretability matters for regulatory, when a simple model gets 90% there.</p>
+                    </div>
+                </div>
+
+                <div class="week-section">
+                    <h5>Project: Cell Phenotype Classifier</h5>
+                    <p class="repo-name">GitHub repo: <code>cell-phenotype-classifier</code></p>
+
+                    <div class="dataset-box">
+                        <strong>Dataset:</strong> <a href="https://bbbc.broadinstitute.org/">Broad Bioimage Benchmark Collection</a> &mdash; BBBC021 (MCF-7 cells, compound-treated, fluorescence images with phenotype labels) or BBBC038 (nuclei segmentation).
+                    </div>
+
+                    <p><strong>What to build:</strong></p>
+                    <ol>
+                        <li>Download cell images with treatment labels from BBBC</li>
+                        <li>Fine-tune a pre-trained CNN (ResNet18) on cell images</li>
+                        <li>Classify cells by treatment condition or phenotype</li>
+                        <li>GradCAM visualization &mdash; what does the model "see"?</li>
+                        <li>Compare: does the CNN find the same features a biologist would?</li>
+                    </ol>
+
+                    <div class="prompt-box">
+                        <h6>Bio-Specific Prompts</h6>
+                        <div class="prompt"><code>Download BBBC021 dataset images. Load them with their treatment labels. Show 3 example images per treatment condition side by side. Resize to 224x224 for the model. Apply standard ImageNet normalization.</code></div>
+                        <div class="prompt"><code>Fine-tune a pre-trained ResNet18 to classify cell images by treatment. Freeze all layers except the final FC layer. Use data augmentation (random flips, rotation, brightness). Train 10 epochs with early stopping on validation loss. Plot train/val accuracy and loss curves.</code></div>
+                        <div class="prompt"><code>Apply GradCAM to the trained model. Show original image alongside GradCAM heatmap for 5 correct and 5 misclassified examples. What cellular features is the model focusing on? Are they biologically meaningful (nucleus shape, organelle distribution, cell morphology)?</code></div>
+                    </div>
+
+                    <div class="concepts-box">
+                        <h6>ML Concepts You'll Pick Up</h6>
+                        <ul>
+                            <li><strong>Transfer learning in practice</strong> &mdash; A ResNet trained on natural images works for cells because low-level features (edges, textures) transfer across domains.</li>
+                            <li><strong>Fine-tuning</strong> &mdash; Freeze base, retrain top layers. This is how most biotech DL works in practice.</li>
+                            <li><strong>Explainability (GradCAM)</strong> &mdash; Seeing what the model "sees" builds trust and reveals biology.</li>
+                            <li><strong>Data augmentation</strong> &mdash; Artificially expanding your dataset with transformations. Essential when labeled bio images are scarce.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="complete-section">
+    <div class="container">
+        <button class="complete-btn">Complete Module 3 &rarr; Unlock Module 4</button>
+        <p class="complete-hint">You should have 3 new GitHub repos and understand embeddings, transcriptomics ML, and DL fundamentals.</p>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container">
+        <p><a href="index.html">&larr; Back to all modules</a></p>
+    </div>
+</footer>
+
+<script src="progress.js"></script>
+<script src="feedback.js"></script>
+<script>initModule(3);</script>
+</body>
+</html>

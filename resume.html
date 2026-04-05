@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Builder | Bench to Bytes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+    <div class="nav-inner">
+        <a href="index.html" class="logo">bench<span>2</span>bytes</a>
+        <div class="nav-links">
+            <a href="index.html">All Modules</a>
+            <a href="module5.html">&larr; Module 5</a>
+        </div>
+    </div>
+</nav>
+
+<header class="module-hero">
+    <div class="container">
+        <p class="module-label">Course Complete</p>
+        <h1>Resume & Skills Generator</h1>
+        <p class="module-desc">Select the projects you completed to generate resume-ready bullet points, a skills section, and a GitHub profile summary. Copy directly into your resume or LinkedIn.</p>
+    </div>
+</header>
+
+<section class="section">
+    <div class="container">
+
+        <h2>Select Completed Projects</h2>
+        <p class="section-subtitle">Check the projects you finished. The generator will create tailored resume content based on your selections.</p>
+
+        <div class="project-checklist" id="projectChecklist">
+
+            <div class="project-check-card" data-project="workspace">
+                <label>
+                    <input type="checkbox" checked>
+                    <div class="project-check-info">
+                        <strong>Dev Environment & Claude Code Setup</strong>
+                        <span>Module 1 &middot; bench2bytes-workspace</span>
+                    </div>
+                </label>
+            </div>
+
+            <div class="project-check-card" data-project="labprocessor">
+                <label>
+                    <input type="checkbox" checked>
+                    <div class="project-check-info">
+                        <strong>Automated Lab Data Processor</strong>
+                        <span>Module 1 &middot; lab-data-processor</span>
+                    </div>
+                </label>
+            </div>
+
+            <div class="project-check-card" data-project="geneexpr">
+                <label>
+                    <input type="checkbox" checked>
+                    <div class="project-check-info">
+                        <strong>Gene Expression Explorer</strong>
+                        <span>Module 2 &middot; gene-expression-explorer</span>
+                    </div>
+                </label>
+            </div>
+
+            <div class="project-check-card" data-project="toxclass">
+                <label>
+                    <input type="checkbox" checked>
+                    <div class="project-check-info">
+                        <strong>Compound Toxicity Classifier</strong>
+                        <span>Module 2 &middot; toxicity-classifier</span>
+                    </div>
+                </label>
+            </div>
+
+            <div class="project-check-card" data-project="knockdown">
+                <label>
+                    <input type="checkbox" checked>
+                    <div class="project-check-info">
+                        <strong>ASO Knockdown Efficiency Predictor</strong>
+                        <span>Module 2 &middot; aso-knockdown-predictor</span>
+                    </div>
+                </label>
+            </div>
+
+            <div class="project-check-card" data-project="protein">
+                <label>
+                    <input type="checkbox" checked>
+                    <div class="project-check-info">
+                        <strong>Protein Embedding Explorer (ESM-2)</strong>
+                        <span>Module 3 &middot; protein-embedding-explorer</span>
+                    </div>
+                </label>
+            </div>
+
+            <div class="project-check-card" data-project="immune">
+                <label>
+                    <input type="checkbox" checked>
+                    <div class="project-check-info">
+                        <strong>Immune Gene Signature Classifier</strong>
+                        <span>Module 3 &middot; immune-signature-classifier</span>
+                    </div>
+                </label>
+            </div>
+
+            <div class="project-check-card" data-project="cellimage">
+                <label>
+                    <input type="checkbox" checked>
+                    <div class="project-check-info">
+                        <strong>Cell Phenotype Classifier (Deep Learning)</strong>
+                        <span>Module 3 &middot; cell-phenotype-classifier</span>
+                    </div>
+                </label>
+            </div>
+
+            <div class="project-check-card" data-project="dashboard">
+                <label>
+                    <input type="checkbox" checked>
+                    <div class="project-check-info">
+                        <strong>Drug Safety Dashboard</strong>
+                        <span>Module 4 &middot; drug-safety-dashboard</span>
+                    </div>
+                </label>
+            </div>
+
+            <div class="project-check-card" data-project="mining">
+                <label>
+                    <input type="checkbox" checked>
+                    <div class="project-check-info">
+                        <strong>BioPaper Mining Tool (LLM-powered)</strong>
+                        <span>Module 4 &middot; biopaper-mining-tool</span>
+                    </div>
+                </label>
+            </div>
+
+            <div class="project-check-card" data-project="dataplaybook">
+                <label>
+                    <input type="checkbox" checked>
+                    <div class="project-check-info">
+                        <strong>ML-Ready Data Playbook</strong>
+                        <span>Module 5 &middot; ml-ready-bio-data</span>
+                    </div>
+                </label>
+            </div>
+
+            <div class="project-check-card" data-project="capstone">
+                <label>
+                    <input type="checkbox" checked>
+                    <div class="project-check-info">
+                        <strong>Oligo Therapeutics ML Pipeline (Capstone)</strong>
+                        <span>Module 5 &middot; oligo-ml-pipeline</span>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <button class="generate-btn" onclick="generateResume()">Generate Resume Content</button>
+    </div>
+</section>
+
+<!-- Generated Output -->
+<section class="section section-dark" id="outputSection" style="display:none;">
+    <div class="container">
+
+        <!-- Skills Section -->
+        <div class="output-block" id="skillsBlock">
+            <div class="output-header">
+                <h2>Skills Section</h2>
+                <button class="copy-btn" onclick="copyBlock('skillsContent')">Copy</button>
+            </div>
+            <pre class="output-content" id="skillsContent"></pre>
+        </div>
+
+        <!-- Project Bullets -->
+        <div class="output-block" id="projectsBlock">
+            <div class="output-header">
+                <h2>Project Bullet Points</h2>
+                <p class="output-hint">Add under a "Selected Projects" or "Computational Biology Portfolio" section on your resume</p>
+                <button class="copy-btn" onclick="copyBlock('projectsContent')">Copy</button>
+            </div>
+            <pre class="output-content" id="projectsContent"></pre>
+        </div>
+
+        <!-- Resume Summary Line -->
+        <div class="output-block" id="summaryBlock">
+            <div class="output-header">
+                <h2>Resume Summary Addition</h2>
+                <p class="output-hint">Add this line to your existing resume summary</p>
+                <button class="copy-btn" onclick="copyBlock('summaryContent')">Copy</button>
+            </div>
+            <pre class="output-content" id="summaryContent"></pre>
+        </div>
+
+        <!-- LinkedIn Section -->
+        <div class="output-block" id="linkedinBlock">
+            <div class="output-header">
+                <h2>LinkedIn Featured Section</h2>
+                <button class="copy-btn" onclick="copyBlock('linkedinContent')">Copy</button>
+            </div>
+            <pre class="output-content" id="linkedinContent"></pre>
+        </div>
+
+        <!-- GitHub Profile README -->
+        <div class="output-block" id="githubBlock">
+            <div class="output-header">
+                <h2>GitHub Profile README</h2>
+                <button class="copy-btn" onclick="copyBlock('githubContent')">Copy</button>
+            </div>
+            <pre class="output-content" id="githubContent"></pre>
+        </div>
+
+        <!-- Claude Polish Prompt -->
+        <div class="output-block" id="polishBlock">
+            <div class="output-header">
+                <h2>Claude Prompt: Polish Everything</h2>
+                <p class="output-hint">Paste this into Claude with your current resume to get a tailored rewrite</p>
+                <button class="copy-btn" onclick="copyBlock('polishContent')">Copy</button>
+            </div>
+            <pre class="output-content" id="polishContent"></pre>
+        </div>
+
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container">
+        <p><a href="index.html">&larr; Back to all modules</a></p>
+    </div>
+</footer>
+
+<script>
+const PROJECT_DATA = {
+    workspace: {
+        skill_tags: ["Claude Code", "AI-assisted development", "project scaffolding"],
+        bullet: null // no resume bullet for setup
+    },
+    labprocessor: {
+        skill_tags: ["automation", "dose-response analysis", "plate QC"],
+        bullet: "Built an automated plate reader data processing tool with QC metrics (Z-factor, CV%), 4-parameter dose-response fitting, and IC50 calculation using Python and Claude Code"
+    },
+    geneexpr: {
+        skill_tags: ["RNA-seq analysis", "PCA", "differential expression", "data visualization"],
+        bullet: "Developed an RNA-seq exploratory analysis pipeline with normalization, PCA-based sample clustering, volcano plots, and hierarchical clustering of differentially expressed genes using public GEO datasets"
+    },
+    toxclass: {
+        skill_tags: ["classification", "scikit-learn", "XGBoost", "SHAP", "model evaluation"],
+        bullet: "Trained and compared ML classifiers (Logistic Regression, Random Forest, XGBoost) to predict compound hepatotoxicity from molecular descriptors, achieving [X] AUC-ROC with interpretable SHAP-based feature importance analysis"
+    },
+    knockdown: {
+        skill_tags: ["regression", "feature engineering", "sequence analysis"],
+        bullet: "Engineered biologically meaningful sequence features (GC content, Tm, dinucleotide frequencies) to predict ASO knockdown efficiency using regression models, with residual analysis revealing sequence-dependent prediction accuracy patterns"
+    },
+    protein: {
+        skill_tags: ["ESM-2", "protein embeddings", "foundation models", "UMAP", "Hugging Face"],
+        bullet: "Applied ESM-2 protein language model embeddings to cluster complement pathway proteins, demonstrating that learned representations outperform hand-crafted features for functional classification using UMAP visualization"
+    },
+    immune: {
+        skill_tags: ["transcriptomics", "gene signatures", "pydeseq2", "biomarker discovery"],
+        bullet: "Combined differential expression analysis (pydeseq2) with Random Forest classification to discover ML-derived interferon gene signatures, identifying non-canonical ISGs with predictive value beyond traditional DEG analysis"
+    },
+    cellimage: {
+        skill_tags: ["deep learning", "transfer learning", "PyTorch", "computer vision", "GradCAM"],
+        bullet: "Fine-tuned pre-trained ResNet18 on fluorescence microscopy images (BBBC) to classify cell phenotypes by drug treatment, with GradCAM explainability analysis revealing biologically meaningful morphological features"
+    },
+    dashboard: {
+        skill_tags: ["Streamlit", "data apps", "FDA FAERS", "API integration", "unsupervised learning", "deployment"],
+        bullet: "Built and deployed an interactive drug safety dashboard (Streamlit) that queries FDA FAERS data, visualizes adverse event profiles by organ system, and clusters drugs by safety profile using UMAP and KMeans"
+    },
+    mining: {
+        skill_tags: ["LLM APIs", "Claude API", "NLP", "structured extraction", "PubMed"],
+        bullet: "Developed an LLM-powered literature mining tool using Claude API to extract structured data (compound, target, model system, findings) from PubMed abstracts, deployed as a Streamlit app for automated scientific literature analysis"
+    },
+    dataplaybook: {
+        skill_tags: ["data strategy", "batch effects", "FAIR data", "experimental design for ML"],
+        bullet: "Authored an ML-ready data strategy guide for wet-lab teams, including a demonstration of how batch effects corrupt ML models and a practical checklist for generating ML-compatible biological datasets"
+    },
+    capstone: {
+        skill_tags: ["end-to-end ML pipeline", "embeddings + classical features", "model interpretation"],
+        bullet: "Designed an end-to-end ML pipeline for oligo therapeutics: data ingestion, dual feature engineering (sequence features + nucleotide embeddings), multi-model comparison with cross-validation, SHAP interpretation, and Streamlit deployment"
+    }
+};
+
+function getSelected() {
+    const cards = document.querySelectorAll('.project-check-card');
+    const selected = [];
+    cards.forEach(card => {
+        if (card.querySelector('input').checked) {
+            selected.push(card.dataset.project);
+        }
+    });
+    return selected;
+}
+
+function generateResume() {
+    const selected = getSelected();
+    if (selected.length === 0) {
+        alert('Select at least one project.');
+        return;
+    }
+
+    // Collect all skill tags
+    const allSkills = new Set();
+    selected.forEach(key => {
+        PROJECT_DATA[key].skill_tags.forEach(s => allSkills.add(s));
+    });
+
+    // Categorize skills
+    const mlSkills = [];
+    const bioCompSkills = [];
+    const toolSkills = [];
+    const mlKeywords = ["classification", "regression", "XGBoost", "scikit-learn", "SHAP", "deep learning", "transfer learning", "PyTorch", "unsupervised learning", "model evaluation", "end-to-end ML pipeline", "feature engineering", "embeddings + classical features", "model interpretation"];
+    const bioKeywords = ["RNA-seq analysis", "PCA", "differential expression", "ESM-2", "protein embeddings", "foundation models", "transcriptomics", "gene signatures", "pydeseq2", "biomarker discovery", "sequence analysis", "dose-response analysis", "plate QC", "batch effects", "FAIR data", "experimental design for ML", "data strategy", "computer vision", "GradCAM"];
+    const toolKeywords = ["Claude Code", "AI-assisted development", "Streamlit", "data apps", "FDA FAERS", "API integration", "LLM APIs", "Claude API", "NLP", "structured extraction", "PubMed", "UMAP", "Hugging Face", "deployment", "automation", "project scaffolding"];
+
+    allSkills.forEach(skill => {
+        if (mlKeywords.includes(skill)) mlSkills.push(skill);
+        else if (bioKeywords.includes(skill)) bioCompSkills.push(skill);
+        else if (toolKeywords.includes(skill)) toolSkills.push(skill);
+        else mlSkills.push(skill);
+    });
+
+    // --- Skills Section ---
+    let skillsText = `COMPUTATIONAL & AI/ML SKILLS\n\n`;
+    if (mlSkills.length) skillsText += `Machine Learning: ${mlSkills.join(', ')}\n`;
+    if (bioCompSkills.length) skillsText += `Biological Data Science: ${bioCompSkills.join(', ')}\n`;
+    if (toolSkills.length) skillsText += `Tools & Platforms: ${toolSkills.join(', ')}\n`;
+    skillsText += `Languages: Python (pandas, NumPy, scikit-learn, matplotlib, seaborn, plotly)\n`;
+    skillsText += `AI Tools: Claude Code, Cursor IDE, GitHub Copilot, Anthropic API`;
+
+    document.getElementById('skillsContent').textContent = skillsText;
+
+    // --- Project Bullets ---
+    let projectsText = `SELECTED COMPUTATIONAL BIOLOGY PROJECTS\ngithub.com/[your-username]\n\n`;
+    selected.forEach(key => {
+        const data = PROJECT_DATA[key];
+        if (data.bullet) {
+            projectsText += `• ${data.bullet}\n\n`;
+        }
+    });
+
+    document.getElementById('projectsContent').textContent = projectsText.trim();
+
+    // --- Summary Line ---
+    const projectCount = selected.filter(k => PROJECT_DATA[k].bullet).length;
+    const hasDeployments = selected.includes('dashboard') || selected.includes('mining');
+    const hasML = selected.includes('toxclass') || selected.includes('knockdown') || selected.includes('capstone');
+    const hasDL = selected.includes('cellimage') || selected.includes('protein');
+    const hasLLM = selected.includes('mining');
+
+    let summaryParts = [];
+    if (hasML) summaryParts.push("machine learning for drug discovery");
+    if (hasDL) summaryParts.push("deep learning for biological data");
+    if (hasLLM) summaryParts.push("LLM-powered scientific tools");
+    if (hasDeployments) summaryParts.push("deployed data applications");
+
+    let summaryText = `Add to your existing resume summary:\n\n`;
+    summaryText += `"Complementary expertise in computational biology and AI/ML, with a portfolio of ${projectCount} open-source projects spanning ${summaryParts.join(', ')}. Proven ability to bridge wet-lab biology and data science to accelerate therapeutic development."`;
+
+    document.getElementById('summaryContent').textContent = summaryText;
+
+    // --- LinkedIn ---
+    let linkedinText = `LINKEDIN FEATURED SECTION\n\n`;
+    linkedinText += `Title: Computational Biology & AI/ML Portfolio\n\n`;
+    linkedinText += `Description:\n`;
+    linkedinText += `${projectCount} open-source projects at the intersection of molecular biology and AI/ML.\n\n`;
+    linkedinText += `Highlights:\n`;
+    if (selected.includes('capstone')) linkedinText += `- End-to-end ML pipeline for oligo therapeutics property prediction\n`;
+    if (selected.includes('mining')) linkedinText += `- LLM-powered tool for automated extraction of structured data from scientific literature\n`;
+    if (selected.includes('dashboard')) linkedinText += `- Interactive drug safety dashboard using FDA adverse event data\n`;
+    if (selected.includes('protein')) linkedinText += `- Protein function clustering using ESM-2 foundation model embeddings\n`;
+    if (selected.includes('immune')) linkedinText += `- ML-discovered interferon gene signatures beyond canonical ISGs\n`;
+    if (selected.includes('toxclass')) linkedinText += `- Compound toxicity classification with interpretable feature importance\n`;
+    linkedinText += `\nLink: github.com/[your-username]`;
+
+    document.getElementById('linkedinContent').textContent = linkedinText;
+
+    // --- GitHub Profile README ---
+    let githubText = `# Hi, I'm Deepakshi Kasat\n\n`;
+    githubText += `Molecular biology scientist building at the intersection of wet lab and AI/ML.\n`;
+    githubText += `Currently at GSK | MS Bioengineering, UCSD\n\n`;
+    githubText += `## What I Do\n\n`;
+    githubText += `I combine deep domain expertise in oligonucleotide therapeutics, immunology, and assay development with machine learning to accelerate drug discovery. I believe the most impactful AI in biotech will come from scientists who understand both the biology and the computation.\n\n`;
+    githubText += `## Featured Projects\n\n`;
+
+    const featured = [
+        { key: 'capstone', name: 'oligo-ml-pipeline', desc: 'End-to-end ML pipeline for oligo therapeutics: sequence features + embeddings, multi-model comparison, SHAP interpretation, Streamlit app', tags: 'Python | scikit-learn | Hugging Face | Streamlit' },
+        { key: 'mining', name: 'biopaper-mining-tool', desc: 'LLM-powered extraction of structured data from PubMed abstracts using Claude API', tags: 'Python | Claude API | Streamlit | PubMed' },
+        { key: 'dashboard', name: 'drug-safety-dashboard', desc: 'Interactive FDA adverse event explorer with drug clustering by safety profile', tags: 'Python | Streamlit | Plotly | FDA FAERS' },
+        { key: 'protein', name: 'protein-embedding-explorer', desc: 'Protein function clustering using ESM-2 embeddings vs. hand-crafted features', tags: 'Python | ESM-2 | UMAP | Hugging Face' },
+        { key: 'immune', name: 'immune-signature-classifier', desc: 'ML-discovered IFN gene signatures compared with traditional DEG analysis', tags: 'Python | pydeseq2 | scikit-learn | GEO' },
+        { key: 'cellimage', name: 'cell-phenotype-classifier', desc: 'Transfer learning for fluorescence microscopy image classification with GradCAM', tags: 'Python | PyTorch | BBBC' },
+    ];
+
+    featured.forEach(f => {
+        if (selected.includes(f.key)) {
+            githubText += `### [${f.name}](https://github.com/[your-username]/${f.name})\n`;
+            githubText += `${f.desc}\n`;
+            githubText += `\`${f.tags}\`\n\n`;
+        }
+    });
+
+    githubText += `## Skills\n\n`;
+    githubText += `**Wet Lab:** Assay development, high-throughput screening, flow cytometry, NGS, RT-qPCR, primary cell culture, iPSC differentiation, automation (Tecan, Hamilton)\n\n`;
+    githubText += `**Computational:** ${[...mlSkills, ...bioCompSkills].join(', ')}\n\n`;
+    githubText += `**Tools:** ${toolSkills.join(', ')}, Python, Git\n\n`;
+    githubText += `## Writing\n\n`;
+    githubText += `- "Scientists Must Leverage, Not Compete with, AI Systems" — *The Scientist* (2025)\n`;
+    githubText += `- "Interferons as therapeutic orchestrators of cancer stem cell plasticity" — *Cytokine and Growth Factor Reviews* (2025)\n`;
+
+    document.getElementById('githubContent').textContent = githubText;
+
+    // --- Claude Polish Prompt ---
+    let polishText = `Use this prompt in Claude with your current resume attached:\n\n---\n\n`;
+    polishText += `I'm a molecular biology scientist at GSK working on oligonucleotide therapeutics. I recently completed a 12-week AI/ML course and built ${projectCount} computational biology projects (linked on my GitHub). I want to update my resume to reflect my new skills at the intersection of biology and AI/ML.\n\n`;
+    polishText += `Here is my current resume [paste or attach your resume PDF].\n\n`;
+    polishText += `Here are the new skills and projects to integrate:\n\n`;
+    polishText += `SKILLS TO ADD:\n${skillsText}\n\n`;
+    polishText += `PROJECTS TO ADD:\n${projectsText}\n\n`;
+    polishText += `Please:\n`;
+    polishText += `1. Rewrite my resume summary to position me at the intersection of molecular biology and AI/ML\n`;
+    polishText += `2. Add a "Computational Biology Portfolio" section with the project bullets above, edited for consistency with my resume's tone and format\n`;
+    polishText += `3. Integrate the computational skills into my existing Core Competencies section naturally\n`;
+    polishText += `4. Suggest where to add specific ML/data science accomplishments to my GSK and Creyon Bio experience sections (e.g., "Developed ML classification models to predict ASO hepatotoxicity risk from molecular descriptors")\n`;
+    polishText += `5. Keep the resume to 2 pages maximum\n`;
+    polishText += `6. Maintain the same formatting and tone as my existing resume\n\n`;
+    polishText += `My career goal: move to the intersection of molecular biology and AI/ML, eventually become a scientific data lead at a startup, and eventually start my own company. Tailor the resume toward these goals while keeping my wet-lab expertise prominent.`;
+
+    document.getElementById('polishContent').textContent = polishText;
+
+    // Show output
+    document.getElementById('outputSection').style.display = 'block';
+    document.getElementById('outputSection').scrollIntoView({ behavior: 'smooth' });
+}
+
+function copyBlock(id) {
+    const text = document.getElementById(id).textContent;
+    const btn = document.getElementById(id).parentElement.querySelector('.copy-btn');
+    navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+            btn.textContent = 'Copy';
+            btn.classList.remove('copied');
+        }, 2000);
+    });
+}
+</script>
+
+<style>
+/* Resume page specific styles */
+.project-checklist {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 32px;
+}
+
+.project-check-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 16px 20px;
+    transition: border-color 0.2s;
+}
+
+.project-check-card:has(input:checked) {
+    border-color: var(--accent2);
+    background: rgba(0, 212, 170, 0.04);
+}
+
+.project-check-card label {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.project-check-card input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    accent-color: var(--accent2);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.project-check-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.project-check-info strong {
+    font-size: 0.9rem;
+    color: var(--text);
+}
+
+.project-check-info span {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+}
+
+.generate-btn {
+    display: block;
+    margin: 0 auto;
+    background: linear-gradient(135deg, var(--accent), #5a52e0);
+    color: #fff;
+    border: none;
+    padding: 16px 48px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: inherit;
+}
+
+.generate-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(108, 99, 255, 0.3);
+}
+
+.output-block {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    margin-bottom: 24px;
+}
+
+.output-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.output-header h2 {
+    font-size: 1.2rem;
+    margin-bottom: 0;
+}
+
+.output-header .copy-btn {
+    margin-left: auto;
+}
+
+.output-hint {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    margin-bottom: 0;
+}
+
+.output-content {
+    background: #0d0d14;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-x: auto;
+    margin: 0;
+}
+
+.copy-btn {
+    background: var(--accent-glow);
+    border: 1px solid rgba(108, 99, 255, 0.3);
+    color: var(--accent);
+    padding: 6px 16px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+}
+
+.copy-btn:hover {
+    background: rgba(108, 99, 255, 0.25);
+}
+
+.copy-btn.copied {
+    background: var(--accent2-glow);
+    border-color: rgba(0, 212, 170, 0.3);
+    color: var(--accent2);
+}
+
+@media (max-width: 768px) {
+    .project-checklist { grid-template-columns: 1fr; }
+}
+</style>
+
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bench to Bytes | AI/ML for Molecular Biology Scientists</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+    <div class="nav-inner">
+        <a href="index.html" class="logo">bench<span>2</span>bytes</a>
+        <div class="nav-links">
+            <a href="#modules">Modules</a>
+            <a href="#about">About</a>
+            <a href="#vocab">ML Glossary</a>
+            <a href="resume.html" class="nav-btn">Resume Builder</a>
+        </div>
+    </div>
+</nav>
+
+<header class="hero">
+    <div class="container">
+        <p class="tag">12 weeks &middot; 5 modules &middot; 12 portfolio projects</p>
+        <h1>From Bench to Bytes</h1>
+        <p class="subtitle">A practical AI/ML course for molecular biology scientists who want to lead at the intersection &mdash; not just spectate from the bench.</p>
+
+        <div class="progress-bar-container">
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <p class="progress-label">0 / 5 modules completed</p>
+        </div>
+    </div>
+</header>
+
+<!-- Modules -->
+<section id="modules" class="section">
+    <div class="container">
+        <h2>Your Learning Path</h2>
+        <p class="section-subtitle">Complete each module to unlock the next. Each builds on what you learned before. Every module has projects you'll push to GitHub.</p>
+
+        <div class="modules-grid">
+
+            <div class="module-card" data-module="1">
+                <div class="module-num">01</div>
+                <div class="module-info">
+                    <h3>Claude Code & AI Tools Mastery</h3>
+                    <p>Master Claude Code CLI, prompt engineering, agents, MCP servers, automation, and the vibe coding workflow that powers the rest of this course.</p>
+                    <div class="module-meta">
+                        <span>Weeks 1-2</span>
+                        <span>2 projects</span>
+                    </div>
+                </div>
+                <span class="module-status">Loading...</span>
+            </div>
+
+            <div class="module-card" data-module="2">
+                <div class="module-num">02</div>
+                <div class="module-info">
+                    <h3>Data Science Foundations</h3>
+                    <p>Upgrade your Python from lab scripts to structured data science. EDA, statistics for ML, classification, regression &mdash; all with biological data.</p>
+                    <div class="module-meta">
+                        <span>Weeks 3-5</span>
+                        <span>3 projects</span>
+                    </div>
+                </div>
+                <span class="module-status">Loading...</span>
+            </div>
+
+            <div class="module-card" data-module="3">
+                <div class="module-num">03</div>
+                <div class="module-info">
+                    <h3>Bio-Specific ML</h3>
+                    <p>Embeddings, foundation models (ESM-2, Nucleotide Transformer), transcriptomics ML, deep learning concepts, and cell image analysis.</p>
+                    <div class="module-meta">
+                        <span>Weeks 6-8</span>
+                        <span>3 projects</span>
+                    </div>
+                </div>
+                <span class="module-status">Loading...</span>
+            </div>
+
+            <div class="module-card" data-module="4">
+                <div class="module-num">04</div>
+                <div class="module-info">
+                    <h3>Building Data Products</h3>
+                    <p>Streamlit dashboards, LLM-powered tools, data apps, API integration &mdash; build things other scientists can actually use.</p>
+                    <div class="module-meta">
+                        <span>Weeks 9-10</span>
+                        <span>2 projects</span>
+                    </div>
+                </div>
+                <span class="module-status">Loading...</span>
+            </div>
+
+            <div class="module-card" data-module="5">
+                <div class="module-num">05</div>
+                <div class="module-info">
+                    <h3>Leadership & Portfolio Launch</h3>
+                    <p>Data strategy for ML, capstone pipeline, portfolio polish, blog post, and positioning yourself at the intersection.</p>
+                    <div class="module-meta">
+                        <span>Weeks 11-12</span>
+                        <span>2 projects</span>
+                    </div>
+                </div>
+                <span class="module-status">Loading...</span>
+            </div>
+
+        </div>
+
+        <div style="text-align:center;">
+            <button class="reset-btn" onclick="resetProgress()">Reset all progress</button>
+        </div>
+    </div>
+</section>
+
+<!-- About -->
+<section id="about" class="section section-dark">
+    <div class="container">
+        <h2>Who Is This For?</h2>
+        <div class="about-grid">
+            <div class="about-item">
+                <div class="about-icon">&#x1F9EC;</div>
+                <h4>You have wet-lab expertise</h4>
+                <p>You run assays, analyze sequences, culture cells. You have deep domain knowledge in molecular biology, immunology, or therapeutics.</p>
+            </div>
+            <div class="about-item">
+                <div class="about-icon">&#x1F40D;</div>
+                <h4>You can script in Python</h4>
+                <p>You've written analysis scripts, maybe automated some data processing. You're not a software engineer, but you're not afraid of code.</p>
+            </div>
+            <div class="about-item">
+                <div class="about-icon">&#x1F680;</div>
+                <h4>You want to lead, not just use</h4>
+                <p>You want to work at the intersection of biology and AI &mdash; leading projects, making data strategy decisions, and eventually building companies.</p>
+            </div>
+            <div class="about-item">
+                <div class="about-icon">&#x1F916;</div>
+                <h4>You code with AI assistants</h4>
+                <p>You use Claude, Cursor, or Copilot to write code. This course leans into that &mdash; every project is designed to be vibe coded with AI tools.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ML Vocabulary -->
+<section id="vocab" class="section">
+    <div class="container">
+        <h2>The Translation Layer</h2>
+        <p class="section-subtitle">ML concepts mapped to lab language you already think in.</p>
+        <div class="vocab-grid">
+            <div class="vocab-card">
+                <div class="vocab-term">Feature</div>
+                <div class="vocab-def">A measurable property used as model input</div>
+                <div class="vocab-analogy">Like a biomarker you measure in an assay</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-term">Training Data</div>
+                <div class="vocab-def">Examples the model learns patterns from</div>
+                <div class="vocab-analogy">Like your positive and negative controls</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-term">Overfitting</div>
+                <div class="vocab-def">Model memorizes noise, fails on new data</div>
+                <div class="vocab-analogy">Like an assay that only works with one cell lot</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-term">Embedding</div>
+                <div class="vocab-def">Dense numerical representation of complex data</div>
+                <div class="vocab-analogy">Like reducing flow cytometry to tSNE coordinates</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-term">Fine-tuning</div>
+                <div class="vocab-def">Adapting a pre-trained model to your specific task</div>
+                <div class="vocab-analogy">Like optimizing a commercial kit for your cell type</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-term">Cross-validation</div>
+                <div class="vocab-def">Testing model robustness across data splits</div>
+                <div class="vocab-analogy">Like validating your assay across multiple donors</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-term">Precision / Recall</div>
+                <div class="vocab-def">Purity of hits vs. catching all true positives</div>
+                <div class="vocab-analogy">Specificity vs. sensitivity of your antibody</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-term">Transfer Learning</div>
+                <div class="vocab-def">Using knowledge from one domain in another</div>
+                <div class="vocab-analogy">Like adapting a mouse assay protocol for human cells</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-term">Pipeline</div>
+                <div class="vocab-def">Automated sequence of data processing steps</div>
+                <div class="vocab-analogy">Like your automated Tecan liquid-handling workflow</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-term">Hallucination</div>
+                <div class="vocab-def">LLM generating plausible but wrong output</div>
+                <div class="vocab-analogy">Like non-specific antibody binding giving false signal</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-term">Batch Normalization</div>
+                <div class="vocab-def">Correcting for systematic variation in training</div>
+                <div class="vocab-analogy">Like normalizing plate-to-plate variation</div>
+            </div>
+            <div class="vocab-card">
+                <div class="vocab-term">RAG</div>
+                <div class="vocab-def">Grounding LLM output with retrieved data</div>
+                <div class="vocab-analogy">Like checking your result against a reference database</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container">
+        <p>Built by <a href="https://deepakshikasat.com">Deepakshi Kasat</a></p>
+        <p class="footer-sub">A self-paced course for wet-lab scientists moving to the AI/ML intersection. Open source and free.</p>
+    </div>
+</footer>
+
+<script src="progress.js"></script>
+<script>initHub();</script>
+</body>
+</html>

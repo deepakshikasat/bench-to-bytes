@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 1: Claude Code & AI Tools | Bench to Bytes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+    <div class="nav-inner">
+        <a href="index.html" class="logo">bench<span>2</span>bytes</a>
+        <div class="nav-links">
+            <a href="index.html">All Modules</a>
+            <a href="module2.html" class="nav-btn">Next Module &rarr;</a>
+        </div>
+    </div>
+</nav>
+
+<div class="module-content">
+
+<header class="module-hero">
+    <div class="container">
+        <p class="module-label">Module 1 &mdash; Weeks 1-2</p>
+        <h1>Claude Code & AI Tools Mastery</h1>
+        <p class="module-desc">Before you learn ML, master the tool you'll use to build everything. Claude Code isn't just autocomplete &mdash; it's agents, automation, plugins, and a completely different way to write software. This module makes you dangerous with it.</p>
+    </div>
+</header>
+
+<!-- Week 1 -->
+<section class="section">
+    <div class="container">
+
+        <div class="week-card" id="week1">
+            <div class="week-header">
+                <span class="week-num">Week 1</span>
+                <h4>Claude Code Fundamentals + Prompt Engineering</h4>
+                <label class="week-check" data-week="w1">
+                    <input type="checkbox"> Done
+                </label>
+            </div>
+            <div class="week-body">
+                <div class="week-goal">
+                    <strong>Goal:</strong> Set up Claude Code as your primary development tool. Learn the core commands, configuration, and prompt engineering patterns that make vibe coding actually work for biology.
+                </div>
+
+                <div class="week-section">
+                    <h5>Setup & Core Commands (45 min)</h5>
+                    <p>Claude Code is a CLI tool that gives you an AI pair programmer in your terminal. It can read files, write code, run commands, search your codebase, and manage git &mdash; all through natural language.</p>
+
+                    <div class="cmd-block">
+<span class="cmd-comment"># Install Claude Code (if not already installed)</span>
+npm install -g @anthropic-ai/claude-code
+
+<span class="cmd-comment"># Start Claude Code in any project directory</span>
+cd ~/Projects/my-bio-project
+claude
+
+<span class="cmd-comment"># Essential commands to know</span>
+/help          <span class="cmd-comment"># See all available commands</span>
+/init          <span class="cmd-comment"># Create a CLAUDE.md for project context</span>
+/clear         <span class="cmd-comment"># Clear conversation history</span>
+/compact       <span class="cmd-comment"># Compress conversation to save context</span>
+/cost          <span class="cmd-comment"># See how much you've spent this session</span>
+/model         <span class="cmd-comment"># Switch between Claude models</span>
+                    </div>
+                </div>
+
+                <div class="week-section">
+                    <h5>CLAUDE.md &mdash; Your Project Brain</h5>
+                    <p>The most important file for vibe coding. <code>CLAUDE.md</code> sits in your project root and tells Claude everything it needs to know about your project. Claude reads it automatically every session.</p>
+
+                    <div class="prompt-box">
+                        <h6>Example CLAUDE.md for a Bio Project</h6>
+                        <div class="prompt"><code># ASO Toxicity Explorer
+
+## What this project does
+Analyzes toxicogenomics data from Open TG-GATEs to explore compound toxicity patterns using EDA and classical ML.
+
+## Tech stack
+- Python 3.11, pandas, scikit-learn, seaborn, plotly
+- Jupyter notebooks for exploration, .py files for reusable functions
+- Data lives in /data (not committed to git)
+
+## Conventions
+- Use snake_case for all functions and variables
+- Every notebook should have a markdown cell at the top explaining what it does
+- Figures saved to /figures as both PNG (for README) and PDF (for publication)
+- Use log2(TPM+1) normalization for gene expression data
+
+## Biology context
+- We're analyzing oligonucleotide toxicity patterns
+- Key endpoints: hepatotoxicity (ALT/AST elevation), complement activation, caspase activation
+- Compound classes: ASOs (antisense oligonucleotides), siRNAs, gapmers
+
+## Current status
+- Data downloaded and cleaned
+- EDA notebook complete
+- Working on classification model</code></div>
+                    </div>
+
+                    <div class="tip-box">
+                        <p><strong>Why this matters:</strong> A good CLAUDE.md means you spend less time re-explaining context every session. It's like a lab notebook for your AI assistant &mdash; the more context it has, the better its suggestions.</p>
+                    </div>
+                </div>
+
+                <div class="week-section">
+                    <h5>Prompt Engineering for Biology Code (1 hr)</h5>
+                    <p>The difference between good and bad vibe coding is prompt quality. Here are patterns that work specifically for biological data science.</p>
+
+                    <div class="prompt-box">
+                        <h6>Pattern 1: Context-First Prompts</h6>
+                        <div class="prompt"><code>Bad: "Make a heatmap"
+
+Good: "I have an RNA-seq count matrix (rows = genes, columns = samples) stored in a DataFrame called `expr_df`. The first 5 columns are IFN-treated macrophages, the last 5 are untreated controls. Create a clustermap of the top 50 most variable genes across all samples, with a column color bar showing treatment condition. Use a diverging colormap centered on 0 (blue-white-red) since this is z-score normalized expression."</code></div>
+                    </div>
+
+                    <div class="prompt-box">
+                        <h6>Pattern 2: Specify Output Format</h6>
+                        <div class="prompt"><code>"Write a function called `compute_sequence_features(seq: str) -> dict` that takes an ASO sequence string and returns a dictionary with: gc_content (float 0-1), length (int), longest_polyG (int), cpg_count (int), dinucleotide_frequencies (dict of all 16 dinucleotides). Include type hints and a docstring with an example."</code></div>
+                    </div>
+
+                    <div class="prompt-box">
+                        <h6>Pattern 3: Iterative Refinement</h6>
+                        <div class="prompt"><code>"The volcano plot looks good but: (1) increase font size to 12pt for publication, (2) add a dashed horizontal line at -log10(0.05), (3) only label genes from this list: [MX1, IFIT1, ISG15, OAS1, STAT1] since those are known ISGs, (4) save as both PNG 300dpi and PDF vector format."</code></div>
+                    </div>
+
+                    <div class="prompt-box">
+                        <h6>Pattern 4: Explain the Biology, Let Claude Handle the Code</h6>
+                        <div class="prompt"><code>"I need to normalize my flow cytometry data. The raw data is MFI (median fluorescence intensity) values for 8 markers across 96 samples in a plate. Some wells are unstained controls (column 1), single-stain controls (column 2), and FMO controls (column 3). The rest are experimental samples. Apply compensation-like subtraction of FMO background, then normalize each marker to the 99th percentile across all experimental samples so values are roughly 0-1."</code></div>
+                    </div>
+
+                    <div class="concepts-box">
+                        <h6>Key Principle</h6>
+                        <ul>
+                            <li><strong>You are the biologist, Claude is the programmer.</strong> Your job is to describe WHAT you need in biological terms and EVALUATE if the output is scientifically correct. Claude's job is to write the code. The more biological context you give, the better the code.</li>
+                            <li><strong>Never accept code you don't understand conceptually.</strong> Ask Claude to explain what it's doing. You don't need to understand every syntax detail, but you need to know the logic.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="week-section">
+                    <h5>Permission Modes & Safety</h5>
+                    <p>Claude Code has permission modes that control how much autonomy it has. Understand these before you start.</p>
+
+                    <table class="info-table">
+                        <tr><th>Mode</th><th>What Happens</th><th>When to Use</th></tr>
+                        <tr><td><code>ask</code> (default)</td><td>Asks before running any command or editing files</td><td>When learning, or working on important code</td></tr>
+                        <tr><td><code>auto</code></td><td>Auto-approves safe actions (reads, searches), asks for writes</td><td>Daily coding once you're comfortable</td></tr>
+                        <tr><td><code>trust</code></td><td>Auto-approves everything</td><td>Throwaway experiments only</td></tr>
+                    </table>
+                </div>
+
+                <div class="week-section">
+                    <h5>Project: Dev Environment Setup</h5>
+                    <p class="repo-name">GitHub repo: <code>bench2bytes-workspace</code></p>
+
+                    <p><strong>What to do:</strong></p>
+                    <ol>
+                        <li>Create a GitHub account (if you don't have one) and a new repo</li>
+                        <li>Clone it locally and initialize Claude Code (<code>claude</code> in the directory)</li>
+                        <li>Create a <code>CLAUDE.md</code> using the template above</li>
+                        <li>Ask Claude to create a Python project scaffold: <code>requirements.txt</code>, <code>/src</code>, <code>/notebooks</code>, <code>/data</code>, <code>/figures</code>, <code>.gitignore</code></li>
+                        <li>Practice 5 different prompts from the patterns above using a simple dataset</li>
+                        <li>Push to GitHub with a clean README</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Week 2 -->
+        <div class="week-card" id="week2">
+            <div class="week-header">
+                <span class="week-num">Week 2</span>
+                <h4>Agents, MCP, Hooks & Automation</h4>
+                <label class="week-check" data-week="w2">
+                    <input type="checkbox"> Done
+                </label>
+            </div>
+            <div class="week-body">
+                <div class="week-goal">
+                    <strong>Goal:</strong> Go beyond basic prompting. Learn how Claude Code's advanced features &mdash; agents, MCP servers, hooks, and custom commands &mdash; let you build automated scientific workflows.
+                </div>
+
+                <div class="week-section">
+                    <h5>Agents & Sub-Agents</h5>
+                    <p>Claude Code can spawn "sub-agents" &mdash; separate Claude instances that handle specific sub-tasks. Think of it like delegating to a research assistant who goes away, does the work, and reports back.</p>
+
+                    <div class="prompt-box">
+                        <h6>How Agents Work</h6>
+                        <div class="prompt"><code>When you give Claude Code a complex task, it can automatically:
+1. Break it into sub-tasks
+2. Spawn agents to handle each one in parallel
+3. Combine the results
+
+Example: "Analyze all CSV files in /data, create a summary statistics table for each, identify the 3 most interesting patterns, and write a combined report."
+
+Claude Code will:
+- Agent 1: Read and summarize file1.csv
+- Agent 2: Read and summarize file2.csv
+- Agent 3: Read and summarize file3.csv
+- Main: Combine findings into a report
+
+This happens automatically for complex tasks. You don't need to orchestrate it.</code></div>
+                    </div>
+
+                    <div class="tip-box">
+                        <p><strong>Bio application:</strong> Ask Claude to "read all the notebooks in this project, understand the analysis pipeline, and suggest what's missing" &mdash; it will use agents to read each notebook in parallel and synthesize.</p>
+                    </div>
+                </div>
+
+                <div class="week-section">
+                    <h5>MCP Servers &mdash; Connecting Claude to External Tools</h5>
+                    <p>MCP (Model Context Protocol) lets Claude Code connect to external services as plugins. Think of MCP servers as lab instruments that Claude can now operate directly.</p>
+
+                    <div class="cmd-block">
+<span class="cmd-comment"># Configure MCP servers in your settings</span>
+<span class="cmd-comment"># File: ~/.claude/settings.json</span>
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/Users/you/Projects"]
+    },
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": { "GITHUB_TOKEN": "your-token-here" }
+    }
+  }
+}
+                    </div>
+
+                    <p><strong>Useful MCP servers for bio-data work:</strong></p>
+                    <table class="info-table">
+                        <tr><th>MCP Server</th><th>What It Does</th><th>Bio Use Case</th></tr>
+                        <tr><td>Filesystem</td><td>Read/write files outside project</td><td>Access data in shared drives</td></tr>
+                        <tr><td>GitHub</td><td>Create issues, PRs, manage repos</td><td>Automate project management</td></tr>
+                        <tr><td>Fetch/Web</td><td>Fetch web content and APIs</td><td>Pull data from PubMed, UniProt, GEO</td></tr>
+                        <tr><td>SQLite</td><td>Query databases</td><td>Query local experiment databases</td></tr>
+                        <tr><td>Google Drive</td><td>Access Google Workspace</td><td>Pull data from shared lab folders</td></tr>
+                    </table>
+                </div>
+
+                <div class="week-section">
+                    <h5>Hooks &mdash; Automating Workflows</h5>
+                    <p>Hooks are shell commands that run automatically in response to Claude Code events. Like triggers on your automation platform.</p>
+
+                    <div class="cmd-block">
+<span class="cmd-comment"># Example hook configuration in settings.json</span>
+<span class="cmd-comment"># Auto-format Python files after Claude edits them</span>
+{
+  "hooks": {
+    "postToolUse": [
+      {
+        "matcher": { "tool": "edit", "glob": "*.py" },
+        "command": "black $FILE_PATH"
+      }
+    ]
+  }
+}
+                    </div>
+
+                    <p><strong>Useful hook patterns:</strong></p>
+                    <ul>
+                        <li><strong>Auto-lint:</strong> Run <code>ruff</code> or <code>black</code> after every Python file edit</li>
+                        <li><strong>Auto-test:</strong> Run relevant tests after code changes</li>
+                        <li><strong>Auto-format notebooks:</strong> Clean notebook outputs after edits</li>
+                        <li><strong>Notifications:</strong> Send a message when a long task completes</li>
+                    </ul>
+                </div>
+
+                <div class="week-section">
+                    <h5>Custom Slash Commands</h5>
+                    <p>Create reusable commands for tasks you do repeatedly. Save them as markdown files in <code>.claude/commands/</code>.</p>
+
+                    <div class="cmd-block">
+<span class="cmd-comment"># File: .claude/commands/eda.md</span>
+<span class="cmd-comment"># Usage: /eda filename.csv</span>
+
+Run exploratory data analysis on the file: $ARGUMENTS
+
+1. Load the data and show shape, dtypes, and first 5 rows
+2. Show missing value counts per column
+3. For numeric columns: descriptive statistics + distribution plots
+4. For categorical columns: value counts + bar plots
+5. Correlation heatmap for numeric features
+6. Identify potential outliers (>3 SD from mean)
+7. Summarize key findings in 3-5 bullet points
+
+Save all figures to /figures/eda/ and create a summary markdown file.
+                    </div>
+
+                    <div class="cmd-block">
+<span class="cmd-comment"># File: .claude/commands/bio-features.md</span>
+<span class="cmd-comment"># Usage: /bio-features sequences.csv</span>
+
+Compute biological features for the sequences in $ARGUMENTS:
+
+1. Read the sequence column from the CSV
+2. For each sequence calculate:
+   - GC content, length, molecular weight estimate
+   - Dinucleotide frequencies (all 16)
+   - Longest homopolymer run
+   - Predicted melting temperature (nearest-neighbor)
+   - Number of CpG dinucleotides
+3. Return as a new DataFrame merged with original data
+4. Save feature correlation heatmap to /figures/
+                    </div>
+
+                    <div class="concepts-box">
+                        <h6>Custom Commands to Create</h6>
+                        <ul>
+                            <li><strong>/eda [file]</strong> &mdash; Run standardized exploratory data analysis</li>
+                            <li><strong>/bio-features [file]</strong> &mdash; Compute biological sequence features</li>
+                            <li><strong>/model-compare [file] [target]</strong> &mdash; Train and compare 3 models on a dataset</li>
+                            <li><strong>/pub-figure [notebook]</strong> &mdash; Export all figures as publication-quality PDFs</li>
+                            <li><strong>/readme</strong> &mdash; Generate a README from the project's current state</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="week-section">
+                    <h5>Using Claude as API (Python SDK)</h5>
+                    <p>For programmatic use in your projects (like the literature mining tool in Module 4), you'll use the Anthropic Python SDK.</p>
+
+                    <div class="cmd-block">
+pip install anthropic
+                    </div>
+
+                    <div class="prompt-box">
+                        <h6>Quick API Example</h6>
+                        <div class="prompt"><code>import anthropic
+
+client = anthropic.Anthropic()  # reads ANTHROPIC_API_KEY from env
+
+message = client.messages.create(
+    model="claude-sonnet-4-20250514",
+    max_tokens=1024,
+    messages=[
+        {
+            "role": "user",
+            "content": "Extract the target gene and compound type from this abstract: ..."
+        }
+    ]
+)
+
+print(message.content[0].text)</code></div>
+                    </div>
+
+                    <div class="tip-box">
+                        <p><strong>When to use CLI vs API:</strong> Use Claude Code CLI for interactive development and exploration. Use the API when you're building a tool that needs Claude inside a script (like extracting data from 100 papers programmatically).</p>
+                    </div>
+                </div>
+
+                <div class="week-section">
+                    <h5>Project: Automated Lab Data Processor</h5>
+                    <p class="repo-name">GitHub repo: <code>lab-data-processor</code></p>
+
+                    <div class="dataset-box">
+                        <strong>Dataset:</strong> Create synthetic plate reader data (96-well format) with absorbance readings at multiple timepoints. Or use your own lab data if available. Template provided in prompts below.
+                    </div>
+
+                    <p><strong>What to build:</strong></p>
+                    <ol>
+                        <li>Create a CLAUDE.md tailored for this project</li>
+                        <li>Build custom slash commands:
+                            <ul>
+                                <li><code>/plate-qc</code> &mdash; Run QC checks on plate reader data (CV of replicates, Z-factor, edge effects)</li>
+                                <li><code>/dose-response</code> &mdash; Fit dose-response curves and calculate IC50</li>
+                            </ul>
+                        </li>
+                        <li>Use Claude Code to build a Python script that:
+                            <ul>
+                                <li>Reads plate reader CSV files</li>
+                                <li>Maps well positions to sample names using a plate map</li>
+                                <li>Calculates Z-factor, CV%, signal-to-noise ratio</li>
+                                <li>Fits dose-response curves (4-parameter logistic)</li>
+                                <li>Exports a summary report with figures</li>
+                            </ul>
+                        </li>
+                        <li>Push to GitHub with a README explaining the workflow</li>
+                    </ol>
+
+                    <div class="prompt-box">
+                        <h6>Prompts to Use</h6>
+                        <div class="prompt"><code>Generate synthetic 96-well plate reader data for a dose-response experiment. 8 doses (3-fold dilution from 100 uM) in columns 2-9, each in triplicate (rows A-C for compound 1, rows D-F for compound 2). Column 1 = vehicle controls, columns 10-12 = positive controls. Add realistic noise (CV ~10%) and a sigmoidal dose-response with IC50 around 5 uM for compound 1 and 15 uM for compound 2. Save as CSV with well position, absorbance, timepoint columns.</code></div>
+                        <div class="prompt"><code>Build a plate QC module that takes raw plate reader data and calculates: (1) Z-factor from positive and negative controls, (2) CV% of replicates for each condition, (3) edge effect analysis (compare perimeter wells vs. interior), (4) flag any wells with >3 SD deviation from replicate mean. Return a QC summary dict and a visual plate heatmap.</code></div>
+                        <div class="prompt"><code>Write a dose-response fitting function that takes concentrations and responses, fits a 4-parameter logistic curve (Hill equation), and returns IC50, Hill slope, top, bottom, R-squared, and 95% CI for IC50. Plot the fitted curve with data points and error bars. Handle cases where the curve doesn't converge.</code></div>
+                    </div>
+
+                    <div class="concepts-box">
+                        <h6>What You're Learning</h6>
+                        <ul>
+                            <li><strong>CLAUDE.md as project documentation</strong> &mdash; Forces you to think about project structure upfront</li>
+                            <li><strong>Custom commands as reusable workflows</strong> &mdash; Like SOPs but for code. Run the same analysis consistently.</li>
+                            <li><strong>Vibe coding a real tool</strong> &mdash; You describe the biology, Claude writes the code. You validate the science.</li>
+                            <li><strong>This project translates directly to your GSK work</strong> &mdash; plate QC and dose-response are daily tasks.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Resources for this module -->
+<section class="section section-dark">
+    <div class="container">
+        <h2>Module 1 Resources</h2>
+        <div class="resources-grid">
+            <div class="resource-category">
+                <h4>Claude Code Documentation</h4>
+                <ul>
+                    <li><a href="https://docs.anthropic.com/en/docs/claude-code">Claude Code official docs</a> &mdash; Complete reference</li>
+                    <li><a href="https://docs.anthropic.com/en/docs/claude-code/cli-usage">CLI Usage Guide</a> &mdash; All commands and flags</li>
+                    <li><a href="https://docs.anthropic.com/en/docs/claude-code/mcp-servers">MCP Servers Guide</a> &mdash; Setting up plugins</li>
+                    <li><a href="https://docs.anthropic.com/en/docs/claude-code/hooks">Hooks Reference</a> &mdash; Automation triggers</li>
+                    <li><a href="https://docs.anthropic.com/en/docs/claude-code/custom-commands">Custom Commands</a> &mdash; Building slash commands</li>
+                </ul>
+            </div>
+            <div class="resource-category">
+                <h4>API & SDK</h4>
+                <ul>
+                    <li><a href="https://docs.anthropic.com/en/api">Anthropic API Docs</a> &mdash; REST API reference</li>
+                    <li><a href="https://github.com/anthropics/anthropic-sdk-python">Python SDK (GitHub)</a> &mdash; Code examples</li>
+                    <li><a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering">Prompt Engineering Guide</a> &mdash; Official best practices</li>
+                    <li><a href="https://modelcontextprotocol.io/">MCP Specification</a> &mdash; Protocol details</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Complete Module -->
+<section class="complete-section">
+    <div class="container">
+        <button class="complete-btn">Complete Module 1 &rarr; Unlock Module 2</button>
+        <p class="complete-hint">Make sure you've pushed both projects to GitHub before completing.</p>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container">
+        <p><a href="index.html">&larr; Back to all modules</a></p>
+    </div>
+</footer>
+
+<script src="progress.js"></script>
+<script src="feedback.js"></script>
+<script>initModule(1);</script>
+</body>
+</html>
