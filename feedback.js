@@ -172,29 +172,29 @@ Please evaluate (score each 1-5):
 Give me: overall score (1-5), top 3 strengths, top 3 improvements, one standout suggestion.`
     },
     w5: {
-        name: "ASO Knockdown Predictor",
-        repo: "aso-knockdown-predictor",
-        prompt: `Review my GitHub repository for an ASO knockdown efficiency prediction project. I engineered sequence features (GC content, Tm, dinucleotides, etc.), trained regression models (Linear, RF, XGBoost), and analyzed residuals to understand where the model fails.
+        name: "Compound Activity Predictor",
+        repo: "compound-activity-predictor",
+        prompt: `Review my GitHub repository for a compound activity prediction project. I engineered RDKit molecular descriptors (Lipinski Ro5 features, TPSA, fingerprints), trained regression models (Linear, Ridge, RF, XGBoost), and analyzed residuals to understand where the model fails.
 
 Please evaluate (score each 1-5):
 
 **Scientific Rigor (30%)**
-- Are the engineered features biologically meaningful for ASO design?
-- Is the regression framing appropriate?
-- Does the residual analysis reveal biological insights?
+- Are the engineered descriptors chemically meaningful for activity prediction?
+- Is the regression framing appropriate (pIC50 vs. raw IC50, log scaling)?
+- Does the residual analysis reveal chemistry insights (e.g., out-of-distribution scaffolds)?
 
 **Technical Execution (25%)**
-- Is feature engineering implemented correctly?
+- Is feature engineering implemented correctly with RDKit?
 - Are regression metrics appropriate (R², MAE, RMSE)?
 - Is the predicted vs. actual plot informative?
 
 **Communication (25%)**
-- Does the README connect to real ASO design principles?
+- Does the README explain the chemistry intuition (Lipinski rules, lipophilicity, etc.)?
 - Are results presented in a way useful for medicinal chemists?
 
 **Portfolio Impact (20%)**
-- Is this directly relevant to oligo therapeutics work?
-- Does it demonstrate feature engineering skill?
+- Is this directly relevant to early drug discovery?
+- Does it demonstrate feature engineering skill (descriptors vs. fingerprints)?
 
 Give me: overall score (1-5), top 3 strengths, top 3 improvements, one standout suggestion.`
     },
@@ -283,9 +283,9 @@ Please evaluate (score each 1-5):
 Give me: overall score (1-5), top 3 strengths, top 3 improvements, one standout suggestion.`
     },
     w12: {
-        name: "Oligo ML Pipeline (Capstone)",
-        repo: "oligo-ml-pipeline",
-        prompt: `Review my capstone GitHub repository for an end-to-end oligo therapeutics ML pipeline. It covers data ingestion, EDA, feature engineering (classical + embeddings), model training/comparison, SHAP interpretation, and Streamlit deployment.
+        name: "Compound ML Pipeline (Capstone)",
+        repo: "compound-ml-pipeline",
+        prompt: `Review my capstone GitHub repository for an end-to-end small-molecule property prediction ML pipeline. It covers data ingestion, EDA, feature engineering (RDKit descriptors + Morgan fingerprints), model training/comparison, SHAP interpretation, and Streamlit deployment.
 
 This is the capstone project for a 12-week bio+AI course. Please evaluate (score each 1-5):
 

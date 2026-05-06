@@ -54,7 +54,11 @@
                     <p class="repo-name">GitHub repo: <code>gene-expression-explorer</code></p>
 
                     <div class="dataset-box">
-                        <strong>Dataset:</strong> <a href="https://www.ncbi.nlm.nih.gov/geo/">GEO</a> &mdash; Pick an RNA-seq dataset relevant to your interests. Suggestions: IFN-stimulated immune cells, ASO-treated hepatocytes, or any treatment vs. control comparison. Or use <a href="https://dee2.io/">DEE2</a> for pre-processed data.
+                        <strong>Dataset:</strong> <a href="https://www.ncbi.nlm.nih.gov/geo/">GEO</a> &mdash; Pick an RNA-seq dataset relevant to your interests. Suggestions: IFN-stimulated immune cells, drug-treated hepatocytes, stress-response in yeast, or any treatment vs. control comparison. Or use <a href="https://dee2.io/">DEE2</a> for pre-processed data. <strong>Pick a dataset that's not a conflict of interest with your day job.</strong>
+                    </div>
+
+                    <div class="dataset-box">
+                        <strong>If you'd rather work with synthetic data:</strong> ask Claude to generate a synthetic RNA-seq count matrix for you with a specified differential expression structure. Example prompt: "Generate a synthetic RNA-seq count matrix: 5000 genes &times; 12 samples (6 treated, 6 control). Use negative binomial counts with realistic mean-variance relationship. Spike in 200 truly differentially expressed genes (100 up, 100 down, log2FC between 1 and 4). Save as data/counts.csv with a separate data/sample_metadata.csv."
                     </div>
 
                     <p><strong>What to build:</strong></p>
@@ -107,7 +111,7 @@
                     <p class="repo-name">GitHub repo: <code>toxicity-classifier</code></p>
 
                     <div class="dataset-box">
-                        <strong>Dataset:</strong> <a href="https://tdcommons.ai/">Therapeutics Data Commons</a> &mdash; Use the hERG toxicity or hepatotoxicity ADMET datasets (pre-formatted for ML). Or use <a href="https://toxico.nibiohn.go.jp/english/">Open TG-GATEs</a> toxicogenomics data.
+                        <strong>Dataset:</strong> <a href="https://tdcommons.ai/">Therapeutics Data Commons</a> &mdash; Use the hERG toxicity or hepatotoxicity ADMET datasets (pre-formatted for ML). Or use <a href="https://toxico.nibiohn.go.jp/english/">Open TG-GATEs</a> toxicogenomics data (public, small-molecule).
                     </div>
 
                     <p><strong>What to build:</strong></p>
@@ -144,52 +148,58 @@
         <div class="week-card" id="week5">
             <div class="week-header">
                 <span class="week-num">Week 5</span>
-                <h4>Knockdown Predictor &mdash; Regression & Feature Engineering</h4>
+                <h4>Compound Activity Predictor &mdash; Regression & Feature Engineering</h4>
                 <label class="week-check" data-week="w5">
                     <input type="checkbox"> Done
                 </label>
             </div>
             <div class="week-body">
                 <div class="week-goal">
-                    <strong>Goal:</strong> Move from categories to continuous values. Predict knockdown efficiency from sequence features &mdash; directly relevant to your ASO work.
+                    <strong>Goal:</strong> Move from categories to continuous values. Predict a compound's potency (pIC50) from molecular descriptors &mdash; the bread-and-butter regression task in early drug discovery.
                 </div>
 
                 <div class="week-section">
-                    <h5>Project: ASO Knockdown Efficiency Predictor</h5>
-                    <p class="repo-name">GitHub repo: <code>aso-knockdown-predictor</code></p>
+                    <h5>Project: Compound Activity Predictor</h5>
+                    <p class="repo-name">GitHub repo: <code>compound-activity-predictor</code></p>
 
                     <div class="dataset-box">
-                        <strong>Dataset:</strong> <a href="https://tdcommons.ai/">TDC</a> siRNA/ASO efficacy datasets, published ASO datasets with knockdown measurements from supplementary tables, or generate synthetic data based on known ASO design rules.
+                        <strong>Dataset:</strong> <a href="https://tdcommons.ai/">Therapeutics Data Commons</a> ADMET regression sets (e.g., Lipophilicity_AstraZeneca, Solubility_AqSolDB, Caco2_Wang) or pull a single ChEMBL target's bioactivity table via the <a href="https://www.ebi.ac.uk/chembl/">ChEMBL</a> API. <strong>Pick a target that's not a conflict of interest with your day job</strong> &mdash; pick a well-studied target like CDK2, JAK1, or HSP90 from public ChEMBL data.
+                    </div>
+
+                    <div class="dataset-box">
+                        <strong>If you'd rather work with synthetic data:</strong> "Generate a synthetic compound bioactivity dataset of 500 compounds. Columns: compound_id, smiles (use rdkit to generate plausible drug-like SMILES), molecular_weight, logP, num_h_bond_donors, num_h_bond_acceptors, tpsa, num_rotatable_bonds, num_aromatic_rings, pIC50 (target value, generated as a noisy linear combination of logP, MW, and TPSA so there's signal to recover). Save to data/compound_activity.csv."
                     </div>
 
                     <p><strong>What to build:</strong></p>
                     <ol>
-                        <li>Curate sequences with measured knockdown efficiency (0-100%)</li>
-                        <li>Engineer biologically meaningful features:
+                        <li>Load a bioactivity dataset with measured activity (pIC50, logSolubility, logP, etc.)</li>
+                        <li>Engineer molecular descriptors:
                             <ul>
-                                <li>GC content, length, dinucleotide frequencies</li>
-                                <li>Predicted melting temperature, secondary structure stability</li>
-                                <li>CpG count, longest homopolymer run</li>
+                                <li>Lipinski's Rule of 5 features: MW, logP, HBD, HBA</li>
+                                <li>TPSA, rotatable bonds, aromatic rings, fraction sp3</li>
+                                <li>Morgan fingerprints (2048-bit) as a high-dimensional alternative</li>
                             </ul>
                         </li>
-                        <li>Train regression models: Linear, Random Forest, XGBoost</li>
+                        <li>Train regression models: Linear, Ridge, Random Forest, XGBoost</li>
                         <li>Evaluate with R&sup2;, MAE, RMSE + predicted vs. actual scatter</li>
                         <li>Residual analysis &mdash; where does the model fail and why?</li>
+                        <li>Compare descriptor-based vs. fingerprint-based representations</li>
                     </ol>
 
                     <div class="prompt-box">
                         <h6>Bio-Specific Prompts</h6>
-                        <div class="prompt"><code>Write a function that takes an ASO sequence string and returns a feature dict: gc_content, length, cpg_count, longest_polyG, predicted Tm (nearest-neighbor), and all 16 dinucleotide frequencies. Include type hints.</code></div>
-                        <div class="prompt"><code>Train an XGBoost regressor to predict knockdown efficiency. Use 5-fold CV. Plot predicted vs. actual with a diagonal reference line, R-squared annotation, and points colored by GC content. Add a marginal histogram on each axis.</code></div>
-                        <div class="prompt"><code>Analyze model residuals (actual - predicted). Plot residuals vs. each top-5 feature. Are there systematic patterns? Highlight regions where the model consistently over- or under-predicts. What biological factors might explain these failures?</code></div>
+                        <div class="prompt"><code>Write `compute_compound_descriptors(smiles: str) -> dict` using RDKit. Return: molecular_weight, logP (Crippen), num_h_bond_donors, num_h_bond_acceptors, num_rotatable_bonds, tpsa, num_aromatic_rings, fraction_sp3, passes_lipinski (bool, all four Ro5 rules). Include type hints, raise ValueError for invalid SMILES, and provide a worked example using aspirin.</code></div>
+                        <div class="prompt"><code>Train an XGBoost regressor to predict pIC50 from descriptors. Use 5-fold cross-validation with random_state=42. Plot predicted vs. actual with a diagonal reference line, R&sup2; and RMSE annotated. Color points by molecular_weight. Add marginal histograms on each axis.</code></div>
+                        <div class="prompt"><code>Analyze model residuals (actual - predicted). Plot residuals vs. each top-5 feature. Are there systematic patterns? Highlight regions where the model consistently over- or under-predicts. What chemistry might explain those failures (e.g., out-of-distribution scaffolds, large macrocycles)?</code></div>
                     </div>
 
                     <div class="concepts-box">
                         <h6>ML Concepts You'll Pick Up</h6>
                         <ul>
                             <li><strong>Regression vs. Classification</strong> &mdash; Predicting a number vs. a category. Different metrics (R&sup2; vs. AUC).</li>
-                            <li><strong>Feature engineering</strong> &mdash; Hand-crafting input features from raw data. This is where biology knowledge is critical.</li>
-                            <li><strong>Residual analysis</strong> &mdash; Understanding model failures reveals biology the model can't capture.</li>
+                            <li><strong>Feature engineering</strong> &mdash; Hand-crafting input features from raw data. This is where chemistry knowledge is critical.</li>
+                            <li><strong>Residual analysis</strong> &mdash; Understanding model failures reveals chemistry the model can't capture.</li>
+                            <li><strong>Representation choice</strong> &mdash; Hand-crafted descriptors (interpretable, low-dim) vs. fingerprints (high-dim, less interpretable). Different trade-offs.</li>
                         </ul>
                     </div>
                 </div>

@@ -122,17 +122,21 @@
                 </div>
 
                 <div class="week-section">
-                    <h5>Project: End-to-End Oligo Therapeutics ML Pipeline</h5>
-                    <p class="repo-name">GitHub repo: <code>oligo-ml-pipeline</code></p>
+                    <h5>Project: End-to-End Compound ML Pipeline</h5>
+                    <p class="repo-name">GitHub repo: <code>compound-ml-pipeline</code></p>
+
+                    <div class="dataset-box">
+                        <strong>Dataset:</strong> A single ChEMBL target's bioactivity table (e.g., CDK2, JAK1, HSP90 &mdash; pick a well-studied public target). Or a TDC ADMET regression set. <strong>Avoid targets that overlap with your day-job work.</strong>
+                    </div>
 
                     <p><strong>What to build:</strong> A pipeline combining skills from every module:</p>
                     <ol>
-                        <li><strong>Data ingestion</strong> (Module 1 &mdash; Claude automation): Pull compound data from a public source</li>
-                        <li><strong>EDA + cleaning</strong> (Module 2): Structured exploration and quality checks</li>
-                        <li><strong>Feature engineering</strong> (Module 2-3): Both classical sequence features AND learned embeddings</li>
-                        <li><strong>Model training</strong> (Module 2-3): Train and compare multiple models with proper CV</li>
-                        <li><strong>Interpretation</strong> (Module 3): SHAP values, biological validation</li>
-                        <li><strong>Deployment</strong> (Module 4): Streamlit app with prediction + explanation</li>
+                        <li><strong>Data ingestion</strong> (Module 1 &mdash; Claude automation): Pull bioactivity data from ChEMBL or TDC</li>
+                        <li><strong>EDA + cleaning</strong> (Module 2): Structured exploration, quality checks, deduplication on canonical SMILES</li>
+                        <li><strong>Feature engineering</strong> (Module 2-3): Both RDKit descriptors (interpretable) AND Morgan fingerprints (high-dim) &mdash; compare</li>
+                        <li><strong>Model training</strong> (Module 2-3): Train and compare multiple models (Ridge, RF, XGBoost) with stratified or scaffold-based CV</li>
+                        <li><strong>Interpretation</strong> (Module 3): SHAP values, chemistry validation</li>
+                        <li><strong>Deployment</strong> (Module 4): Streamlit app where a user pastes a SMILES and gets a prediction + explanation</li>
                         <li><strong>Documentation</strong> (All): README that could serve as a mini-paper</li>
                     </ol>
                 </div>
@@ -176,7 +180,7 @@
                     <h6>Bio-Specific Prompts</h6>
                     <div class="prompt"><code>Write a GitHub profile README for a molecular biology scientist building at the intersection of wet lab and ML. Include: (1) a 2-sentence bio, (2) a "Featured Projects" section with 4 cards showing project name, one-line description, and tech stack badges (Python, scikit-learn, Streamlit, PyTorch, etc.), (3) a "Skills" section split into Wet Lab / Computational / Tools columns. Keep it clean and professional.</code></div>
                     <div class="prompt"><code>Draft a 600-word LinkedIn article: "What I Learned Building ML Projects as a Wet-Lab Scientist." Structure: (1) why I did this — the gap I saw, (2) the biggest surprise — feature engineering matters more than model choice for biological data, (3) where domain expertise beats algorithms — interpreting feature importance, catching batch effects, knowing which questions matter, (4) what I'd tell other scientists. Make it personal, specific, and link to 2-3 GitHub projects.</code></div>
-                    <div class="prompt"><code>Write a 1-page proposal for an ML project at a pharma company: "Predicting ASO Hepatotoxicity Risk from Sequence Features and In Vitro Assay Data." Include: Business Case (why), Data Available (what we have), Approach (how, including baseline and ML models), Expected Impact (what changes if it works), Timeline (4-6 weeks), Risks (batch effects, sample size, label quality). Keep it concise enough for a director to read in 3 minutes.</code></div>
+                    <div class="prompt"><code>Write a 1-page proposal for an ML project at a pharma company: "Predicting Compound Hepatotoxicity Risk from Molecular Descriptors and In Vitro Assay Data." Include: Business Case (why), Data Available (what we have), Approach (how, including baseline and ML models), Expected Impact (what changes if it works), Timeline (4-6 weeks), Risks (batch effects, sample size, label quality). Keep it concise enough for a director to read in 3 minutes.</code></div>
                 </div>
 
                 <div class="concepts-box">
@@ -245,14 +249,14 @@
                     <li><code>lab-data-processor</code> &mdash; Plate QC + dose-response</li>
                     <li><code>gene-expression-explorer</code> &mdash; RNA-seq EDA</li>
                     <li><code>toxicity-classifier</code> &mdash; First ML model</li>
-                    <li><code>aso-knockdown-predictor</code> &mdash; Regression</li>
+                    <li><code>compound-activity-predictor</code> &mdash; Regression</li>
                     <li><code>protein-embedding-explorer</code> &mdash; ESM-2</li>
                     <li><code>immune-signature-classifier</code> &mdash; Transcriptomics ML</li>
                     <li><code>cell-phenotype-classifier</code> &mdash; Deep learning</li>
                     <li><code>drug-safety-dashboard</code> &mdash; Streamlit app</li>
                     <li><code>biopaper-mining-tool</code> &mdash; LLM extraction</li>
                     <li><code>ml-ready-bio-data</code> &mdash; Data strategy</li>
-                    <li><code>oligo-ml-pipeline</code> &mdash; Capstone</li>
+                    <li><code>compound-ml-pipeline</code> &mdash; Capstone</li>
                 </ul>
             </div>
         </div>

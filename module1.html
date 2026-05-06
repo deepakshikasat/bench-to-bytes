@@ -76,10 +76,10 @@ claude
 
                     <div class="prompt-box">
                         <h6>Example CLAUDE.md for a Bio Project</h6>
-                        <div class="prompt"><code># ASO Toxicity Explorer
+                        <div class="prompt"><code># Compound Tox Explorer
 
 ## What this project does
-Analyzes toxicogenomics data from Open TG-GATEs to explore compound toxicity patterns using EDA and classical ML.
+Analyzes synthetic small-molecule toxicogenomics data to explore compound toxicity patterns using EDA and classical ML. Personal portfolio project &mdash; all data is synthetic to keep this independent of any employer work.
 
 ## Tech stack
 - Python 3.11, pandas, scikit-learn, seaborn, plotly
@@ -93,9 +93,10 @@ Analyzes toxicogenomics data from Open TG-GATEs to explore compound toxicity pat
 - Use log2(TPM+1) normalization for gene expression data
 
 ## Biology context
-- We're analyzing oligonucleotide toxicity patterns
-- Key endpoints: hepatotoxicity (ALT/AST elevation), complement activation, caspase activation
-- Compound classes: ASOs (antisense oligonucleotides), siRNAs, gapmers
+- We're analyzing small-molecule compound toxicity patterns
+- Key endpoints: hepatotoxicity (ALT/AST/GGT elevation), oxidative stress, apoptosis (caspase activation)
+- Compound classes: four generic mechanism categories (Class A/B/C/D) &mdash; fully synthetic
+- Gene panel: universal liver/stress markers plus a broader transcriptomic panel
 
 ## Current status
 - Data downloaded and cleaned
@@ -121,7 +122,7 @@ Good: "I have an RNA-seq count matrix (rows = genes, columns = samples) stored i
 
                     <div class="prompt-box">
                         <h6>Pattern 2: Specify Output Format</h6>
-                        <div class="prompt"><code>"Write a function called `compute_sequence_features(seq: str) -> dict` that takes an ASO sequence string and returns a dictionary with: gc_content (float 0-1), length (int), longest_polyG (int), cpg_count (int), dinucleotide_frequencies (dict of all 16 dinucleotides). Include type hints and a docstring with an example."</code></div>
+                        <div class="prompt"><code>"Write a function called `compute_compound_descriptors(smiles: str) -> dict` that takes a SMILES string and returns a dictionary with: molecular_weight (float, Da), logP (float, RDKit Crippen), num_h_bond_donors (int), num_h_bond_acceptors (int), num_rotatable_bonds (int), tpsa (float, topological polar surface area), passes_lipinski (bool, all four Ro5 rules). Include type hints, a docstring with a worked example using aspirin (CC(=O)Oc1ccccc1C(=O)O), and raise ValueError for invalid SMILES."</code></div>
                     </div>
 
                     <div class="prompt-box">
@@ -134,25 +135,106 @@ Good: "I have an RNA-seq count matrix (rows = genes, columns = samples) stored i
                         <div class="prompt"><code>"I need to normalize my flow cytometry data. The raw data is MFI (median fluorescence intensity) values for 8 markers across 96 samples in a plate. Some wells are unstained controls (column 1), single-stain controls (column 2), and FMO controls (column 3). The rest are experimental samples. Apply compensation-like subtraction of FMO background, then normalize each marker to the 99th percentile across all experimental samples so values are roughly 0-1."</code></div>
                     </div>
 
+                    <div class="prompt-box">
+                        <h6>Pattern 5: Show Me the Data First</h6>
+                        <div class="prompt"><code>Bad: jumping straight to "build a classifier on data/compound_tox.csv"
+
+Good: "Read data/compound_tox.csv and tell me: shape, dtypes, missing-value counts per column, summary statistics for numeric columns, value counts for categorical columns, and any obvious data-quality issues (constant columns, suspicious ranges, duplicate rows). Don't model anything yet &mdash; just describe what's in the file."
+
+Then in your next prompt: "Given what you found, what's the cleanest way to set up a binary classifier for hepatotox_label?"</code></div>
+                    </div>
+
+                    <div class="tip-box">
+                        <p><strong>Why it matters:</strong> Skipping this step is how you end up with models trained on leaked features or NaN-filled garbage. Always force Claude to describe the data before transforming it.</p>
+                    </div>
+
+                    <div class="prompt-box">
+                        <h6>Pattern 6: Specify What NOT to Do (Constraints)</h6>
+                        <div class="prompt"><code>"Build a hepatotox classifier on data/compound_tox.csv (target = hepatotox_label).
+
+Constraints &mdash; these matter:
+- Do NOT use any of the *_fold_change columns as features. Those derive from the label and would leak.
+- Do NOT impute missing values with column means before splitting. Fit imputers on train only.
+- Do NOT use accuracy as the headline metric &mdash; classes are imbalanced. Use ROC-AUC and PR-AUC.
+- Do NOT use a stock train_test_split. Stratify on hepatotox_label so test set has the same prevalence.
+- Do NOT install new packages without telling me first."</code></div>
+                    </div>
+
+                    <div class="tip-box">
+                        <p><strong>Why it matters:</strong> Claude will produce reasonable-looking code that does subtly wrong things (data leakage, wrong metric, unstratified splits) unless you forbid them. Stating constraints up front is faster than catching the bugs in code review.</p>
+                    </div>
+
+                    <div class="prompt-box">
+                        <h6>Pattern 7: Ask Claude to Validate Its Own Output</h6>
+                        <div class="prompt"><code>"After training the classifier, run these sanity checks and tell me if anything looks suspicious:
+1. ROC-AUC on training set vs. test set &mdash; if train >> test, flag as overfitting.
+2. Permutation importance for the top 5 features &mdash; if a single feature dominates with importance &gt; 0.5, flag as possible leakage.
+3. Prediction distribution on the test set &mdash; if &gt;95% of predictions are one class, flag as a degenerate model.
+4. Confusion matrix at the default 0.5 threshold and at the threshold that maximizes F1.
+
+For any flag, propose what to investigate next. Don't fix anything yet &mdash; just diagnose."</code></div>
+                    </div>
+
+                    <div class="tip-box">
+                        <p><strong>Why it matters:</strong> Claude is good at finding problems if you ask it to. The same model that "looks great" in the first response often has obvious issues when you specifically request a critique.</p>
+                    </div>
+
                     <div class="concepts-box">
                         <h6>Key Principle</h6>
                         <ul>
                             <li><strong>You are the biologist, Claude is the programmer.</strong> Your job is to describe WHAT you need in biological terms and EVALUATE if the output is scientifically correct. Claude's job is to write the code. The more biological context you give, the better the code.</li>
                             <li><strong>Never accept code you don't understand conceptually.</strong> Ask Claude to explain what it's doing. You don't need to understand every syntax detail, but you need to know the logic.</li>
+                            <li><strong>If your prompt is shorter than three sentences, you probably haven't given enough context.</strong> Domain words ("Hy's law", "log2 fold-change", "Z-factor") are free context &mdash; use them.</li>
+                            <li><strong>One prompt = one decision.</strong> Don't bundle "load data + clean + train + plot + interpret" into one ask. Each step has decisions you should review before the next one.</li>
+                        </ul>
+                    </div>
+
+                    <div class="concepts-box">
+                        <h6>Common Pitfalls</h6>
+                        <ul>
+                            <li><strong>Magic-fixing.</strong> Pasting an error and saying "fix it" makes Claude guess at the cause. Better: paste the error AND describe what you were trying to do.</li>
+                            <li><strong>Premature aesthetics.</strong> Don't burn turns on plot polish before you trust the analysis. Get the numbers right, then style.</li>
+                            <li><strong>Trusting the first answer on a hard biology call.</strong> If Claude makes a non-trivial scientific judgment ("I dropped genes with TPM &lt; 1 in &gt;80% of samples"), challenge it: ask why, ask what an alternative threshold would change.</li>
+                            <li><strong>Letting Claude pick the random seed.</strong> If you can't reproduce a result, you can't show it. Fix seeds explicitly in every prompt that involves randomness (splits, model init, sampling).</li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="week-section">
                     <h5>Permission Modes & Safety</h5>
-                    <p>Claude Code has permission modes that control how much autonomy it has. Understand these before you start.</p>
+                    <p>Claude Code has permission modes that control how much autonomy it has. Cycle through them in any session by pressing <code>Shift+Tab</code> &mdash; the active mode shows in the status line.</p>
 
                     <table class="info-table">
                         <tr><th>Mode</th><th>What Happens</th><th>When to Use</th></tr>
-                        <tr><td><code>ask</code> (default)</td><td>Asks before running any command or editing files</td><td>When learning, or working on important code</td></tr>
-                        <tr><td><code>auto</code></td><td>Auto-approves safe actions (reads, searches), asks for writes</td><td>Daily coding once you're comfortable</td></tr>
-                        <tr><td><code>trust</code></td><td>Auto-approves everything</td><td>Throwaway experiments only</td></tr>
+                        <tr><td><code>default</code></td><td>Asks before running shell commands or editing files</td><td>Default for any work that matters</td></tr>
+                        <tr><td><code>acceptEdits</code></td><td>Auto-accepts file edits, still asks for shell commands</td><td>Active coding sessions where you're reviewing diffs as they land</td></tr>
+                        <tr><td><code>plan</code></td><td>Read-only &mdash; Claude can search and read but cannot edit or run anything</td><td>When you want a plan without touching the codebase</td></tr>
+                        <tr><td><code>bypassPermissions</code></td><td>Auto-accepts everything, including shell commands ("YOLO mode")</td><td>Sandboxes and throwaway experiments only. Never on a real codebase.</td></tr>
                     </table>
+
+                    <div class="tip-box">
+                        <p><strong>Set a default for new sessions:</strong> add <code>"defaultMode": "acceptEdits"</code> to <code>~/.claude/settings.json</code>. Don't put <code>bypassPermissions</code> there &mdash; opt into it per-session.</p>
+                    </div>
+                </div>
+
+                <div class="week-section">
+                    <h5>Practice Dataset (Synthetic Compound Toxicity)</h5>
+                    <p>Throughout Module 1 we use a small synthetic toxicology dataset. It's intentionally fake: no real compounds, no real biology &mdash; just realistic shape and distributions so you can practice prompting on something that looks like a real EDA problem.</p>
+
+                    <div class="dataset-box">
+                        <strong>Schema:</strong> 100 rows. Columns &mdash; <code>compound_id</code> (str), <code>compound_class</code> (A/B/C/D), <code>molecular_weight</code> (Da), <code>logP</code>, <code>dose_uM</code>, <code>alt_fold_change</code>, <code>ast_fold_change</code>, <code>ggt_fold_change</code>, <code>hepatotox_label</code> (0/1, positive if any FC &gt; 3).
+                    </div>
+
+                    <p>Generate it once at the start of the project. Paste this into Claude Code &mdash; this prompt itself is Pattern 4 (biology-first):</p>
+
+                    <div class="prompt-box">
+                        <h6>Generate the practice dataset</h6>
+                        <div class="prompt"><code>Generate a synthetic compound toxicity dataset and save as data/compound_tox.csv. 100 compounds. Columns: compound_id (str like "CMP001"), compound_class (one of: A, B, C, D &mdash; pick uniformly), molecular_weight (float, 200-800 Da), logP (float, -1 to 6), dose_uM (log-spaced from 0.1 to 100), alt_fold_change (1.0-15, log-normal noise &mdash; Class B and D should average ~3x higher than A and C), ast_fold_change (correlated with ALT, ratio noise ~10%), ggt_fold_change (similar pattern), hepatotox_label (binary: 1 if any of ALT/AST/GGT &gt; 3, the standard fold-change threshold). Use a fixed random seed for reproducibility. Add a docstring at the top of the script explaining the schema.</code></div>
+                    </div>
+
+                    <div class="tip-box">
+                        <p><strong>Why synthetic:</strong> A toy dataset removes data wrangling as a confounder while you learn prompting. Once you're comfortable, every later module uses real public data (GEO, ChEMBL, BBBC, FAERS).</p>
+                    </div>
                 </div>
 
                 <div class="week-section">
@@ -163,11 +245,39 @@ Good: "I have an RNA-seq count matrix (rows = genes, columns = samples) stored i
                     <ol>
                         <li>Create a GitHub account (if you don't have one) and a new repo</li>
                         <li>Clone it locally and initialize Claude Code (<code>claude</code> in the directory)</li>
-                        <li>Create a <code>CLAUDE.md</code> using the template above</li>
+                        <li>Create a <code>CLAUDE.md</code> using the template above &mdash; rename the project to something that's not a conflict of interest with your day job</li>
                         <li>Ask Claude to create a Python project scaffold: <code>requirements.txt</code>, <code>/src</code>, <code>/notebooks</code>, <code>/data</code>, <code>/figures</code>, <code>.gitignore</code></li>
-                        <li>Practice 5 different prompts from the patterns above using a simple dataset</li>
-                        <li>Push to GitHub with a clean README</li>
+                        <li>Generate the practice dataset using the prompt above</li>
+                        <li>Run the 5-prompt practice exercise below &mdash; one prompt for each of the patterns</li>
+                        <li>Push to GitHub with a clean README explaining what each prompt was practicing</li>
                     </ol>
+
+                    <div class="prompt-box">
+                        <h6>5-Prompt Practice Exercise</h6>
+                        <div class="prompt"><code>Prompt 1 &mdash; Pattern 1 (Context-first):
+"I have a CSV at data/compound_tox.csv with 100 compounds. Columns: compound_id, compound_class (A/B/C/D), molecular_weight (Da), logP, dose_uM, alt_fold_change, ast_fold_change, ggt_fold_change, hepatotox_label (0/1). Make a strip plot of alt_fold_change on the y-axis grouped by compound_class on the x-axis, with hepatotox_label as the hue (0 = blue, 1 = red). Add a horizontal dashed line at fold-change = 3. Use a log scale on the y-axis. Save to figures/alt_by_class.png at 300dpi."
+
+Prompt 2 &mdash; Pattern 2 (Specify output format):
+"Write a function `compute_tox_features(row: pd.Series) -> dict` in src/features.py that takes one compound row and returns: max_fold_change (float, max of ALT/AST/GGT FCs), n_elevated_markers (int, count of markers with FC &gt; 3), tox_severity (str: 'none' if max FC &lt; 2, 'mild' if 2-3, 'moderate' if 3-5, 'severe' if &gt;5), is_high_risk (bool: True if alt_fold_change &gt; 3 AND ast_fold_change &gt; 3). Include type hints, a docstring with a worked example, and raise ValueError if any required column is missing."
+
+Prompt 3 &mdash; Pattern 3 (Iterative refinement, run after Prompt 1):
+"The strip plot from figures/alt_by_class.png is close but: (1) make points size 8 with alpha 0.7, (2) increase font sizes to 12pt, (3) overlay the median ALT FC per class as a black horizontal bar, (4) order classes by ascending median ALT FC, (5) save as both PNG (300dpi) and PDF."
+
+Prompt 4 &mdash; Pattern 4 (Biology-first):
+"I want to know whether lipophilicity (logP) predicts hepatotoxicity. Textbook claim: highly lipophilic compounds (logP &gt; 3) accumulate in hepatocytes and disrupt mitochondrial function. Compute Spearman correlation between logP and alt_fold_change overall and per compound_class. Make a scatter plot of logP vs alt_fold_change colored by class with a LOWESS trend per class. Tell me whether the data supports the claim, including class-specific exceptions."
+
+Prompt 5 &mdash; Combination (Patterns 1 + 2):
+"Write a notebook at notebooks/01_compound_eda.ipynb. Cell 1 (markdown): title + dataset description. Cell 2 (code): imports. Cell 3: load + shape/dtypes/head. Cell 4: missing-value check + summary stats. Cell 5: histogram of alt_fold_change (log scale) with FC=3 line. Cell 6: boxplot of alt_fold_change by class with sample sizes. Cell 7: correlation heatmap of numeric columns. Cell 8 (markdown): 3-5 bullet summary. Save figures to figures/eda/ as PNG."</code></div>
+                    </div>
+
+                    <div class="concepts-box">
+                        <h6>What to look for as you practice</h6>
+                        <ul>
+                            <li>Did Claude ask any clarifying questions? If so, what was missing from your prompt?</li>
+                            <li>Did the output match what you pictured? If not, was it the prompt or your mental model that was off?</li>
+                            <li>For Prompt 4 specifically: does Claude's biological interpretation match the data, or is it confidently wrong? This is the "you validate the science" muscle.</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

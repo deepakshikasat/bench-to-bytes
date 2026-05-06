@@ -61,7 +61,7 @@
                     <ol>
                         <li>Lets users search for a drug or compound class</li>
                         <li>Shows adverse event profiles organized by organ system</li>
-                        <li>Compares safety profiles: ASOs vs. small molecules vs. antibodies</li>
+                        <li>Compares safety profiles across drug modalities (small molecules, biologics, etc.)</li>
                         <li>ML clustering of drugs by adverse event profile (unsupervised)</li>
                         <li>Interactive plotly visualizations</li>
                         <li>Deploy on Streamlit Cloud (free tier)</li>
@@ -106,7 +106,7 @@
                     <p class="repo-name">GitHub repo: <code>biopaper-mining-tool</code></p>
 
                     <div class="dataset-box">
-                        <strong>Dataset:</strong> PubMed abstracts via <a href="https://www.ncbi.nlm.nih.gov/books/NBK25500/">NCBI E-utilities API</a>. Search for "antisense oligonucleotide" OR "oligonucleotide therapeutics" OR your area of interest.
+                        <strong>Dataset:</strong> PubMed abstracts via <a href="https://www.ncbi.nlm.nih.gov/books/NBK25500/">NCBI E-utilities API</a>. Pick a focused, public-knowledge topic (e.g., "CRISPR base editing", "kinase inhibitor selectivity", "drug-induced liver injury"). <strong>Avoid topics that overlap with your day-job work</strong> if portfolio independence matters.
                     </div>
 
                     <p><strong>What to build:</strong></p>
@@ -114,7 +114,7 @@
                         <li>Fetch abstracts from PubMed by search query</li>
                         <li>Use Claude API to extract structured data:
                             <ul>
-                                <li>Drug/compound name + chemistry type (ASO, siRNA, gapmer, etc.)</li>
+                                <li>Drug/compound name + modality (small molecule, antibody, gene therapy, etc.)</li>
                                 <li>Target gene/pathway</li>
                                 <li>Model system (cell type, animal model, clinical)</li>
                                 <li>Key findings (efficacy, toxicity, mechanism)</li>
@@ -129,7 +129,7 @@
                     <div class="prompt-box">
                         <h6>Bio-Specific Prompts</h6>
                         <div class="prompt"><code>Write a function using the NCBI E-utilities API that searches PubMed for a query string and returns the top N abstracts with PubMed IDs, titles, authors, publication date, journal, and full abstract text as a DataFrame. Include rate limiting (max 3 requests/second per NCBI guidelines).</code></div>
-                        <div class="prompt"><code>Using the Anthropic Python SDK, write a function that sends a PubMed abstract to Claude and extracts structured data. The system prompt should instruct Claude to return JSON with these fields: compound_name, compound_type (one of: ASO, siRNA, gapmer, miRNA, aptamer, other), target_gene, model_system, species, key_finding, toxicity_mentioned (bool), doses_tested. Handle cases where information isn't stated (return null, not a guess). Use claude-haiku for cost efficiency since we're processing many abstracts.</code></div>
+                        <div class="prompt"><code>Using the Anthropic Python SDK, write a function that sends a PubMed abstract to Claude and extracts structured data. The system prompt should instruct Claude to return JSON with these fields: compound_name, modality (one of: small_molecule, antibody, peptide, cell_therapy, gene_therapy, other), target_gene, model_system, species, key_finding, toxicity_mentioned (bool), doses_tested. Handle cases where information isn't stated (return null, not a guess). Use Claude Haiku for cost efficiency since we're processing many abstracts.</code></div>
                         <div class="prompt"><code>Build a Streamlit app for this literature mining tool. Layout: (1) sidebar with PubMed search query input, number of papers slider (10-100), and a "Mine Papers" button with a progress bar, (2) main area with tabs: "Results Table" (sortable, filterable DataFrame), "Analytics" (bar charts of top targets, compound types, model systems), "Download" (CSV export button). Cache results so re-running doesn't re-fetch.</code></div>
                     </div>
 

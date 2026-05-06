@@ -81,8 +81,8 @@
                 <label>
                     <input type="checkbox" checked>
                     <div class="project-check-info">
-                        <strong>ASO Knockdown Efficiency Predictor</strong>
-                        <span>Module 2 &middot; aso-knockdown-predictor</span>
+                        <strong>Compound Activity Predictor</strong>
+                        <span>Module 2 &middot; compound-activity-predictor</span>
                     </div>
                 </label>
             </div>
@@ -152,7 +152,7 @@
                     <input type="checkbox" checked>
                     <div class="project-check-info">
                         <strong>Oligo Therapeutics ML Pipeline (Capstone)</strong>
-                        <span>Module 5 &middot; oligo-ml-pipeline</span>
+                        <span>Module 5 &middot; compound-ml-pipeline</span>
                     </div>
                 </label>
             </div>
@@ -251,12 +251,12 @@ const PROJECT_DATA = {
         bullet: "Trained and compared ML classifiers (Logistic Regression, Random Forest, XGBoost) to predict compound hepatotoxicity from molecular descriptors, achieving [X] AUC-ROC with interpretable SHAP-based feature importance analysis"
     },
     knockdown: {
-        skill_tags: ["regression", "feature engineering", "sequence analysis"],
-        bullet: "Engineered biologically meaningful sequence features (GC content, Tm, dinucleotide frequencies) to predict ASO knockdown efficiency using regression models, with residual analysis revealing sequence-dependent prediction accuracy patterns"
+        skill_tags: ["regression", "feature engineering", "molecular descriptors", "RDKit"],
+        bullet: "Engineered RDKit molecular descriptors (Lipinski Ro5 features, TPSA, fingerprints) to predict compound bioactivity (pIC50) using regression models, with residual analysis revealing chemistry-dependent prediction accuracy patterns"
     },
     protein: {
         skill_tags: ["ESM-2", "protein embeddings", "foundation models", "UMAP", "Hugging Face"],
-        bullet: "Applied ESM-2 protein language model embeddings to cluster complement pathway proteins, demonstrating that learned representations outperform hand-crafted features for functional classification using UMAP visualization"
+        bullet: "Applied ESM-2 protein language model embeddings to cluster a public protein family (kinases), demonstrating that learned representations outperform hand-crafted features for functional classification using UMAP visualization"
     },
     immune: {
         skill_tags: ["transcriptomics", "gene signatures", "pydeseq2", "biomarker discovery"],
@@ -280,7 +280,7 @@ const PROJECT_DATA = {
     },
     capstone: {
         skill_tags: ["end-to-end ML pipeline", "embeddings + classical features", "model interpretation"],
-        bullet: "Designed an end-to-end ML pipeline for oligo therapeutics: data ingestion, dual feature engineering (sequence features + nucleotide embeddings), multi-model comparison with cross-validation, SHAP interpretation, and Streamlit deployment"
+        bullet: "Designed an end-to-end ML pipeline for small-molecule property prediction: ChEMBL data ingestion, dual feature engineering (RDKit descriptors + Morgan fingerprints), multi-model comparison with cross-validation, SHAP interpretation, and Streamlit deployment"
     }
 };
 
@@ -368,7 +368,7 @@ function generateResume() {
     linkedinText += `Description:\n`;
     linkedinText += `${projectCount} open-source projects at the intersection of molecular biology and AI/ML.\n\n`;
     linkedinText += `Highlights:\n`;
-    if (selected.includes('capstone')) linkedinText += `- End-to-end ML pipeline for oligo therapeutics property prediction\n`;
+    if (selected.includes('capstone')) linkedinText += `- End-to-end ML pipeline for small-molecule property prediction (descriptors + embeddings)\n`;
     if (selected.includes('mining')) linkedinText += `- LLM-powered tool for automated extraction of structured data from scientific literature\n`;
     if (selected.includes('dashboard')) linkedinText += `- Interactive drug safety dashboard using FDA adverse event data\n`;
     if (selected.includes('protein')) linkedinText += `- Protein function clustering using ESM-2 foundation model embeddings\n`;
@@ -387,7 +387,7 @@ function generateResume() {
     githubText += `## Featured Projects\n\n`;
 
     const featured = [
-        { key: 'capstone', name: 'oligo-ml-pipeline', desc: 'End-to-end ML pipeline for oligo therapeutics: sequence features + embeddings, multi-model comparison, SHAP interpretation, Streamlit app', tags: 'Python | scikit-learn | Hugging Face | Streamlit' },
+        { key: 'capstone', name: 'compound-ml-pipeline', desc: 'End-to-end ML pipeline for small-molecule property prediction: RDKit descriptors + Morgan fingerprints, multi-model comparison, SHAP interpretation, Streamlit app', tags: 'Python | scikit-learn | RDKit | Streamlit' },
         { key: 'mining', name: 'biopaper-mining-tool', desc: 'LLM-powered extraction of structured data from PubMed abstracts using Claude API', tags: 'Python | Claude API | Streamlit | PubMed' },
         { key: 'dashboard', name: 'drug-safety-dashboard', desc: 'Interactive FDA adverse event explorer with drug clustering by safety profile', tags: 'Python | Streamlit | Plotly | FDA FAERS' },
         { key: 'protein', name: 'protein-embedding-explorer', desc: 'Protein function clustering using ESM-2 embeddings vs. hand-crafted features', tags: 'Python | ESM-2 | UMAP | Hugging Face' },
@@ -424,7 +424,7 @@ function generateResume() {
     polishText += `1. Rewrite my resume summary to position me at the intersection of molecular biology and AI/ML\n`;
     polishText += `2. Add a "Computational Biology Portfolio" section with the project bullets above, edited for consistency with my resume's tone and format\n`;
     polishText += `3. Integrate the computational skills into my existing Core Competencies section naturally\n`;
-    polishText += `4. Suggest where to add specific ML/data science accomplishments to my GSK and Creyon Bio experience sections (e.g., "Developed ML classification models to predict ASO hepatotoxicity risk from molecular descriptors")\n`;
+    polishText += `4. Suggest where to add specific ML/data science accomplishments to my GSK and Creyon Bio experience sections (e.g., "Developed ML classification models to predict compound hepatotoxicity risk from molecular descriptors")\n`;
     polishText += `5. Keep the resume to 2 pages maximum\n`;
     polishText += `6. Maintain the same formatting and tone as my existing resume\n\n`;
     polishText += `My career goal: move to the intersection of molecular biology and AI/ML, eventually become a scientific data lead at a startup, and eventually start my own company. Tailor the resume toward these goals while keeping my wet-lab expertise prominent.`;
